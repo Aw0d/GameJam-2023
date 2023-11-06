@@ -1,7 +1,6 @@
 import pygame
-import Obstacles
 
-class Chair(Obstacles):
+class Chair():
 
     def __init__(self):
         pass

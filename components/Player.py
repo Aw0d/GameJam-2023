@@ -4,14 +4,14 @@ vec = pg.math.Vector2
 
 class Player(pg.sprite.Sprite):
 
-    def __init__(self, ground_group):
+    def __init__(self, all_objects):
         super().__init__()
         self.image = pg.Surface((20, 60))
         self.rect = self.image.get_rect()
         # Donne une couleur
         self.image.fill("blue")
 
-        self.ground_group = ground_group
+        self.all_objects = all_objects
 
         # Position
         self.pos = vec((200, 600))
@@ -57,18 +57,19 @@ class Player(pg.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def ground_colision(self):
-      hits = pg.sprite.spritecollide(self, self.ground_group, False)
+      hits = pg.sprite.spritecollide(self, self.all_objects, False)
+      print(hits)
       if self.vel_y > 0:
           if hits:
-              lowest = hits[0]
-              if self.pos.y < lowest.rect.bottom:
-                  self.pos.y = lowest.rect.top + 1
-                  self.vel_y = 0
-                  self.jumping = False
+                lowest = hits[0]
+                if self.pos.y - self.vel_y < lowest.rect.bottom:
+                    self.pos.y = lowest.rect.top + 1
+                    self.vel_y = 0
+                    self.jumping = False
 
     def jump(self):
         # Check to see if payer is in contact with the ground
-        hits = pg.sprite.spritecollide(self, self.ground_group, False)
+        hits = pg.sprite.spritecollide(self, self.all_objects, False)
             
         # If touching the ground, and not currently jumping, cause the player to jump.
         if hits and not self.jumping:
