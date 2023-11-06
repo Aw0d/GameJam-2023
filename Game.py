@@ -3,7 +3,7 @@ from components.Player import Player
 from components.Ground import Ground
 from components.Spike import Spike
 
-class Game:    
+class Game:
     def __init__(self, screen: pg.Surface):
         # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
@@ -38,9 +38,6 @@ class Game:
         self.isEnded = False
 
     def isRunning(self):
-        global pause
-        if pause:
-            return
         if self.isEnded:
             return False
         for event in pg.event.get():
@@ -62,7 +59,7 @@ class Game:
         collisions = pg.sprite.spritecollide(self.player, self.all, False)
         for sprite in collisions:
             if self.player.rect.colliderect(sprite.rect):
-                print("collision")
+                self.isEnded = True
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
