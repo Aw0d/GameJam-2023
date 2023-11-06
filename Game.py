@@ -1,5 +1,6 @@
 import pygame as pg
 from components.Player import Player
+from components.Ground import Ground
 
 class Game:
     
@@ -13,11 +14,16 @@ class Game:
         # Dessine le font d'écran une première fois
         self.screen.blit(self.background,(0,0))
 
+        # Création du sol
+        ground = Ground(screen)
+        self.ground_group = pg.sprite.Group()
+        self.ground_group.add(ground)
+
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
 
-        self.player = Player()
+        self.player = Player(self.ground_group)
         self.all.add(self.player)
 
         # Vrai si le jeu est fini
@@ -43,6 +49,9 @@ class Game:
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
 
+        self.player.move()
+
+        self.ground_group.draw(self.screen)
         # Dessine tous les sprites dans la surface de l'écran
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
