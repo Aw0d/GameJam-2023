@@ -3,6 +3,7 @@ from components.Player import Player
 from components.Ground import Ground
 from components.Spike import Spike
 from components.Table import Table
+from components.Chair import Chair
 
 
 class Game:
@@ -27,9 +28,9 @@ class Game:
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
         
-        self.all.add(Table(800, self.ground.rect.top))
+        self.all.add(Chair(800, self.ground.rect.top))
         self.all.add(Table(1000, self.ground.rect.top))
-        self.all.add(Table(1200, self.ground.rect.top))
+        self.all.add(Chair(1200, self.ground.rect.top))
         self.all.add(Table(1400, self.ground.rect.top))
         self.all.add(Table(1600, self.ground.rect.top))
         self.all.add(Table(1800, self.ground.rect.top))
@@ -40,7 +41,7 @@ class Game:
         self.all.add(Spike(2800, self.ground.rect.top,30))
         self.all.add(self.ground)
 
-        self.player = Player(self.all)
+        self.player = Player()
         self.player_group = pg.sprite.RenderUpdates()
         self.player_group.add(self.player)
 
@@ -61,18 +62,28 @@ class Game:
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
-        # Met à jours tous les sprites
-        self.all.update(dt, self.speed)
-        self.player.update()
+        # Collision entre le joueur et les autres objets
+        hits = pg.sprite.spritecollide(self.player, self.all, False)
 
+        # Récupération des touches appuyées
+        pressed_keys = pg.key.get_pressed()
+
+        if pressed_keys[pg.K_UP]:
+            self.player.jump(hits)
+        if pressed_keys[pg.K_DOWN]:
+            self.player.slide()
+
+        # Met à jours tous les sprites
+        self.all.update(dt, self.speed)        
+        self.player.update(dt, hits)
         # Test de la collision entre le Player et les autres elements
-        collisions = pg.sprite.spritecollide(self.player, self.all, False)
-        for sprite in collisions:
-            if type(sprite).__name__ == "Spike":
-                self.isEnded = True
-            elif type(sprite).__name__ == "Table":
-                if self.player.rect.bottom > sprite.rect.bottom:
+        for sprite in hits:
+            if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Chair":
+                if self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1 > sprite.rect.top:
+                    print("player: " , (self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1), "\n objet: ", sprite.rect.top)
                     self.isEnded = True
+            elif type(sprite).__name__ != "Ground":
+                self.isEnded = True
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
