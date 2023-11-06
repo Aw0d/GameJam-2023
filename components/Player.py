@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.sliding = False
         self.slide_timer = 0  # Initialisation du compteur de glissade
 
-    def update(self, dt, speed):
+    def update(self, *args):
         self.move()
 
         if self.sliding:
@@ -35,6 +35,7 @@ class Player(pg.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.sliding = False
                 self.slide_timer = 0
+                self.rect.midbottom = self.pos
 
     def move(self):
         # Récupération des touches appuyées

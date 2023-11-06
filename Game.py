@@ -3,9 +3,9 @@ from components.Player import Player
 from components.Ground import Ground
 from components.Spike import Spike
 
-class Game:
-    
+class Game:    
     def __init__(self, screen: pg.Surface):
+        # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
 
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
@@ -23,13 +23,14 @@ class Game:
         # Définition de la vitesse du jeu
         self.speed = 0.2
 
+        self.player = Player(self.ground_group)
+        self.player_group = pg.sprite.RenderUpdates()
+        self.player_group.add(self.player)
+        
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
-
-        self.player = Player(self.ground_group)
-        self.all.add(self.player)
-
+        
         spike = Spike(800, ground.rect.top, 30)
         self.all.add(spike)
 
@@ -37,6 +38,9 @@ class Game:
         self.isEnded = False
 
     def isRunning(self):
+        global pause
+        if pause:
+            return
         if self.isEnded:
             return False
         for event in pg.event.get():
@@ -52,11 +56,20 @@ class Game:
         """
         # Met à jours tous les sprites
         self.all.update(dt, self.speed)
+        self.player.update()
+
+        # Test de la collision entre le Player et les autres elements
+        collisions = pg.sprite.spritecollide(self.player, self.all, False)
+        for sprite in collisions:
+            if self.player.rect.colliderect(sprite.rect):
+                print("collision")
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
+        self.player_group.clear(self.screen, self.background)
 
         self.ground_group.draw(self.screen)
+        self.player_group.draw(self.screen)
         # Dessine tous les sprites dans la surface de l'écran
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
