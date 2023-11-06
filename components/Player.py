@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.sliding = False
         self.slide_timer = 0  # Initialisation du compteur de glissade
 
-    def update(self):
+    def update(self, dt, speed):
         self.move()
 
         if self.sliding:

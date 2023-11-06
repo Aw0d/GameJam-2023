@@ -1,6 +1,7 @@
 import pygame as pg
 from components.Player import Player
 from components.Ground import Ground
+from components.Spike import Spike
 
 class Game:
     
@@ -19,12 +20,18 @@ class Game:
         self.ground_group = pg.sprite.Group()
         self.ground_group.add(ground)
 
+        # Définition de la vitesse du jeu
+        self.speed = 0.2
+
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
 
         self.player = Player(self.ground_group)
         self.all.add(self.player)
+
+        spike = Spike(800, ground.rect.top, 30)
+        self.all.add(spike)
 
         # Vrai si le jeu est fini
         self.isEnded = False
@@ -39,12 +46,12 @@ class Game:
                     return False
         return True
     
-    def update(self):
+    def update(self, dt : int):
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
         # Met à jours tous les sprites
-        self.all.update()
+        self.all.update(dt, self.speed)
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
