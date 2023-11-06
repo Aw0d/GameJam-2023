@@ -39,17 +39,15 @@ class Game:
                     return False
         return True
     
-    def update(self,dt : int):
+    def update(self):
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
         # Met à jours tous les sprites
-        self.all.update(dt)
+        self.all.update()
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
-
-        self.player.move()
 
         self.ground_group.draw(self.screen)
         # Dessine tous les sprites dans la surface de l'écran

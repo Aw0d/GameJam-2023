@@ -20,6 +20,21 @@ class Player(pg.sprite.Sprite):
 
         self.jumping = False
         self.sliding = False
+        self.slide_timer = 0  # Initialisation du compteur de glissade
+
+    def update(self):
+        self.move()
+
+        if self.sliding:
+            # Compteur pour la durée de la glissade
+            self.slide_timer += 1
+            if self.slide_timer >= 60:  # Réduisez ce nombre selon la durée de la glissade souhaitée (60 correspond à une seconde)
+                # Rétablir la hauteur normale du personnage
+                self.image = pg.Surface((20, 60))
+                self.image.fill("blue")
+                self.rect = self.image.get_rect()
+                self.sliding = False
+                self.slide_timer = 0
 
     def move(self):
         # Récupération des touches appuyées
@@ -61,4 +76,8 @@ class Player(pg.sprite.Sprite):
     
     def slide(self):
         if not self.sliding:
-            pass
+            # Réduire la hauteur du personnage
+            self.image = pg.Surface((20, 30))  # Nouvelle surface avec une hauteur réduite
+            self.image.fill("blue")
+            self.rect = self.image.get_rect()
+            self.sliding = True
