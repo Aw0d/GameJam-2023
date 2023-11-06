@@ -22,7 +22,7 @@ class Game:
         self.ground = Ground(screen)
 
         # Définition de la vitesse du jeu
-        self.speed = 0.2
+        self.speed = 5
        
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -78,9 +78,14 @@ class Game:
         self.player.update(dt, hits)
         # Test de la collision entre le Player et les autres elements
         for sprite in hits:
-            if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Chair":
+            if type(sprite).__name__ == "Table":
+                # Si on n'est pas au dessus
+                if self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1 > sprite.rect.top or self.player.rect.top < sprite.rect.bottom:
+                    print("player: ", self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1, "\n objet: ", sprite.rect.top)
+                    self.isEnded = True
+            elif type(sprite).__name__ == "Chair":
+                # Si on n'est pas au dessus
                 if self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1 > sprite.rect.top:
-                    print("player: " , (self.player.rect.bottom - abs(self.player.vel_y + dt/10 * self.player.acc_y) - 1), "\n objet: ", sprite.rect.top)
                     self.isEnded = True
             elif type(sprite).__name__ != "Ground":
                 self.isEnded = True

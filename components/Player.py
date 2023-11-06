@@ -14,8 +14,7 @@ class Player(pg.sprite.Sprite):
         # Position
         self.pos = vec((200, 600))
         self.vel_y = 0
-        self.acc_y = 0.6
-
+        self.acc_y = 0.8
         self.jumping = False
         self.sliding = False
         self.slide_timer = 0  # Initialisation du compteur de glissade
@@ -37,8 +36,8 @@ class Player(pg.sprite.Sprite):
 
     def move(self,dt, hits):
         # Application de la gravité
-        self.vel_y += self.acc_y
-        self.pos.y += self.vel_y + dt/10 * self.acc_y  # Updates Position with new values
+        self.vel_y += self.acc_y * (dt / (1/60))
+        self.pos.y += self.vel_y # Updates Position with new values
 
         # Vérification de la colision avec le sol
         self.ground_colision(hits)

@@ -28,8 +28,5 @@ class Spike(pg.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def update(self, dt, speed):
-        self.pos.x -= dt * speed
+        self.pos.x -= speed * (dt / (1/60))
         self.rect.midbottom = self.pos
-
-    def collide(self, player):
-        pass
