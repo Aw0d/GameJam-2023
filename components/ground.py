@@ -4,7 +4,7 @@ class Ground(pg.sprite.Sprite):
     def __init__(self, screen_size):
         super().__init__()
         self.screen_size = screen_size
-        self.image = pg.image.load("images/ground.png")
+        self.image = pg.image.load("images/ground1.png")
         self.rect = self.image.get_rect()
         self.rect.width = self.rect.width * 2
 

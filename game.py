@@ -15,7 +15,7 @@ class Game:
         self.screen = screen
 
         # Définition de la vitesse du jeu
-        self.speed = 0.4
+        self.speed = 0.3
         # Compteur du nombre de bonus
         self.bonus = 0
 

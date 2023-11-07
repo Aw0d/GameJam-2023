@@ -4,10 +4,10 @@ class Table(pg.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
-        self.image = pg.Surface((100, 20))
+        self.image = pg.image.load("images/background/table.png")
         self.rect = self.image.get_rect()
         # Donne une couleur
-        self.image.fill("brown")
+        # self.image.fill("brown")
 
         self.pos = pg.math.Vector2((x, y-40))
         # Positionner le rectangle aux coordonnées spécifiées (x, y)

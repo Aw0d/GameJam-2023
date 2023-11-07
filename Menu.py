@@ -4,29 +4,43 @@ import pygame as pg
 GRIS = (211,211,211)
 
 
-
-
-class Button(pg.sprite.Sprite):
+class Text(pg.sprite.Sprite):
     def __init__(self, x , y, image):
         super().__init__()
         #self.image = pg.Surface((100, 50))
         self.image = pg.image.load(image)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+
+
+class Button(pg.sprite.Sprite):
+    def __init__(self, x , y, image, func):
+        super().__init__()
+        #self.image = pg.Surface((100, 50))
+        self.image = pg.image.load(image)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        #on enregistre l'Etat du button(True si il est clicked, FALSE sinon)
+        self.state = False
+        self.func = func
         
     
 
 class Menu_principale():
 
-    def __init__(self, screen : pg.Surface ):
+    def __init__(self, screen : pg.Surface):
         self.screen = screen
-        start_button = Button(512, 300, 'img/menu_button.png' )
-        menu_button = Button(512, 425, 'img/menu_button.png')
-        inspect_button = Button(512, 550, 'img/menu_button.png')
-        exit_button = Button(512, 675, 'img/menu_button.png')
+        titre_text = Text(512, 100, 'img/titre.jpeg')
+        start_button = Button(512, 300, 'img/menu_button.png', lambda:print("START"))
+        menu_button = Button(512, 425, 'img/menu_button.png',lambda:print("OPTIONS") )
+        inspect_button = Button(512, 550, 'img/menu_button.png',lambda:print("MODE INSPECTION"))
+        exit_button = Button(512, 675, 'img/menu_button.png',lambda:print("EXIT"))
+        
+        self.list_buttons = [start_button, menu_button, exit_button, inspect_button]
         
         self.buttons = pg.sprite.RenderUpdates()
 
+        self.buttons.add(titre_text)
         self.buttons.add(start_button)
         self.buttons.add(menu_button)
         self.buttons.add(inspect_button)
@@ -36,17 +50,24 @@ class Menu_principale():
         self.clear_background.fill((202,228,241))
 
         self.screen.blit(self.clear_background,(0,0))
-        
-        
-        
-
+    
+    
     def run(self):
         self.clear_background = pg.Surface(self.screen.get_size())
         self.clear_background.fill((202,228,241))
         self.screen.blit(self.clear_background,(0,0))
         dirty = self.buttons.draw(self.screen)
         pg.display.update(dirty)
-            
+        pos = pg.mouse.get_pos()
+        for button in self.list_buttons:
+            if button.rect.collidepoint(pos):
+                if pg.mouse.get_pressed()[0] == 1 and button.state == False:
+                    button.state = True
+                    button.func()
+                    print('Cliked')
+                    
+            if pg.mouse.get_pressed()[0] == 0:
+                button.state = False
         
 
 
