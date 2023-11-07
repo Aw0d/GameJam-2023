@@ -8,8 +8,6 @@ class Book(pg.sprite.Sprite):
 
         self.image = pg.image.load("images/bonus/books.png")
         self.rect = self.image.get_rect()
-        # Donne une couleur
-        #self.image.fill("green")
 
         self.pos = pg.math.Vector2((x, y))
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
