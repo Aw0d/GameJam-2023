@@ -1,11 +1,11 @@
 import pygame as pg
 
 class Ground(pg.sprite.Sprite):
-    def __init__(self, screen):
+    def __init__(self, x, y):
         super().__init__()
-        self.screen = screen
         self.image = pg.Surface((1024, 80))
-        self.rect = self.image.get_rect(center = (512, 728))
- 
-    def render(self):
-        self.screen.blit(self.image, (self.rect.x, self.rect.y))  
+        self.rect = self.image.get_rect()
+
+        self.pos = pg.math.Vector2((x, y))
+        # Positionner le rectangle aux coordonnées spécifiées (x, y)
+        self.rect.bottomleft = self.pos

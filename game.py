@@ -1,5 +1,6 @@
 import pygame as pg
 from components.player import Player
+from components.background import Background
 from components.ground import Ground
 from components.spike import Spike
 from components.table import Table
@@ -13,26 +14,29 @@ class Game:
         # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
 
-        # Crée une surface pour le fond du jeu de même taille que la fenêtre
-        self.background = pg.Surface(self.screen.get_size())
-        self.background.fill("white")
-
-        # Dessine le font d'écran une première fois
-        self.screen.blit(self.background,(0,0))
-
-        # Création du sol
-        self.ground = Ground(screen)
-
         # Définition de la vitesse du jeu
         self.speed = 0.4
         # Compteur du nombre de bonus
         self.bonus = 0
-       
+
+        # Crée une surface pour le fond du jeu de même taille que la fenêtre pour effacer le contenu affiché
+        self.clear_background = pg.Surface(self.screen.get_size())
+        self.clear_background.fill("white")
+        # Dessine le font d'écran une première fois
+        self.screen.blit(self.clear_background,(0,0))
+
+        # Crée une surface pour le fond du jeu de même taille que la fenêtre
+        self.background = Background(self.screen.get_size())
+        # Création du sol
+        self.ground = Ground(0, self.screen.get_size()[1])
+
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
 
-        
+        self.all.add(self.background)
+        self.all.add(self.ground)
+
         self.all.add(Book(800, self.ground.rect.top - 70))
         self.all.add(Chair(800, self.ground.rect.top))
         self.all.add(Table(1000, self.ground.rect.top))
@@ -49,7 +53,7 @@ class Game:
 
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
-            if type(sprite).__name__ not in ["Player", "Book"]:
+            if type(sprite).__name__ not in ["Background", "Player"]:
                 self.objects_with_hitbox.add(sprite) 
 
         self.player = Player()
@@ -88,10 +92,14 @@ class Game:
         self.player._update(dt, hits)
 
         # Test de la collision entre le Player et les autres elements
-        for sprite in pg.sprite.spritecollide(self.player, self.all, False):
-            if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Chair":
+        for sprite in hits:
+            if type(sprite).__name__ == "Table":
                 # Si on n'est pas au dessus
                 if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
+                    self.isEnded = True
+            elif type(sprite).__name__ == "Chair":
+                # Si on n'est pas au dessus
+                if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) > sprite.rect.bottom - 10:
                     self.isEnded = True
             elif type(sprite).__name__ == "Spike":
                 self.isEnded = True
@@ -100,8 +108,9 @@ class Game:
                 self.bonus += 1
 
         # Vide l'écran en replacant le background
-        self.all.clear(self.screen, self.background)
+        self.all.clear(self.screen, self.clear_background)
         # Dessine tous les sprites dans la surface de l'écran
+        self.background.draw(self.screen)
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
         pg.display.update(dirty)

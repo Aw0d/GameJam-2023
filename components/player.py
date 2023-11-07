@@ -6,13 +6,13 @@ class Player(pg.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pg.image.load("images/characters/player/run1.png")
+        self.image = pg.Surface((20,60))
         self.rect = self.image.get_rect()
         # Donne une couleur
         #self.image.fill("blue")
 
         # Position
-        self.pos = vec((200, 600))
+        self.pos = vec((200, 200))
         self.vel_y = 0
         self.acc_y = 0.12
         self.jumping = False
@@ -48,13 +48,16 @@ class Player(pg.sprite.Sprite):
 
     def ground_colision(self, hits):
       if self.vel_y > 0:
-          if hits:
-                lowest = hits[0]
-                #print("collision avec: ", type(lowest).__name__ , self.rect.bottom, " > ", (lowest.rect.top - 1), (self.rect.bottom > lowest.rect.top - 1))
-                if self.rect.bottom > lowest.rect.top - 1 and self.rect.bottom < lowest.rect.bottom:
-                    self.pos.y = lowest.rect.top + 1
-                    self.vel_y = 0
-                    self.jumping = False
+        i = 0
+        while i < len(hits) and (type(hits[i]).__name__ in ["Book"]):
+            i += 1
+        if i < len(hits) :
+
+            lowest = hits[i]
+            if self.rect.bottom > lowest.rect.top - 1 and self.rect.bottom < lowest.rect.bottom:
+                self.pos.y = lowest.rect.top + 1
+                self.vel_y = 0
+                self.jumping = False
 
     def jump(self, hits):
         # If touching the ground, and not currently jumping, cause the player to jump.
