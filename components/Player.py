@@ -24,8 +24,8 @@ class Player(pg.sprite.Sprite):
 
         if self.sliding:
             # Compteur pour la durée de la glissade
-            self.slide_timer += 1
-            if self.slide_timer >= 60:  # Réduisez ce nombre selon la durée de la glissade souhaitée (60 correspond à une seconde)
+            self.slide_timer += dt
+            if self.slide_timer >= 500:  # Réduisez ce nombre selon la durée de la glissade souhaitée
                 # Rétablir la hauteur normale du personnage
                 self.image = pg.Surface((20, 60))
                 self.image.fill("blue")
