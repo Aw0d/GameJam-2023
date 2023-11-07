@@ -28,5 +28,5 @@ class Spike(pg.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def update(self, dt, speed):
-        self.pos.x -= speed * (dt / (1/60))
+        self.pos.x -= speed * dt
         self.rect.midbottom = self.pos

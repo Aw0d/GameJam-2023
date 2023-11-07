@@ -29,7 +29,7 @@ def main():
         dt = clock.tick(60)
 
         # Met à jour le jeu sachant que dt millisecondes se sont écoulées
-        game.update(dt/1000)
+        game.update(dt)
 
         # Affiche le nouvel état de l'écran
         pg.display.flip()
