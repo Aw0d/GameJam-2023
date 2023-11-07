@@ -28,7 +28,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground(0, self.screen.get_size()[1])
+        self.ground = Ground(self.screen.get_size())
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -37,18 +37,18 @@ class Game:
         self.all.add(self.background)
         self.all.add(self.ground)
 
-        self.all.add(Book(800, self.ground.rect.top - 70))
-        self.all.add(Chair(800, self.ground.rect.top))
-        self.all.add(Table(1000, self.ground.rect.top))
-        self.all.add(Chair(1200, self.ground.rect.top))
-        self.all.add(Table(1400, self.ground.rect.top - 10 * 1))
-        self.all.add(Table(1600, self.ground.rect.top - 10 * 2))
-        self.all.add(Table(1800, self.ground.rect.top - 10 * 3))
-        self.all.add(Spike(2000, self.ground.rect.top))
-        self.all.add(Spike(2200, self.ground.rect.top))
-        self.all.add(Spike(2400, self.ground.rect.top))
-        self.all.add(Spike(2600, self.ground.rect.top))
-        self.all.add(Spike(2800, self.ground.rect.top))
+        #self.all.add(Book(800, self.ground.rect.top - 70))
+        #self.all.add(Chair(800, self.ground.rect.top))
+        #self.all.add(Table(1000, self.ground.rect.top))
+        #self.all.add(Chair(1200, self.ground.rect.top))
+        #self.all.add(Table(1400, self.ground.rect.top - 10 * 1))
+        #self.all.add(Table(1600, self.ground.rect.top - 10 * 2))
+        #self.all.add(Table(1800, self.ground.rect.top - 10 * 3))
+        #self.all.add(Spike(2000, self.ground.rect.top))
+        #self.all.add(Spike(2200, self.ground.rect.top))
+        #self.all.add(Spike(2400, self.ground.rect.top))
+        #self.all.add(Spike(2600, self.ground.rect.top))
+        #self.all.add(Spike(2800, self.ground.rect.top))
         self.all.add(self.ground)
 
         self.objects_with_hitbox = pg.sprite.Group()
@@ -106,6 +106,7 @@ class Game:
         self.all.clear(self.screen, self.clear_background)
         # Dessine tous les sprites dans la surface de l'écran
         self.background.draw(self.screen)
+        self.ground.draw(self.screen)
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
         pg.display.update(dirty)
