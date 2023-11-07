@@ -1,8 +1,10 @@
 import pygame as pg
 
 class Spike(pg.sprite.Sprite):
-    def __init__(self, x, y, size):
+    def __init__(self, x, y):
         super().__init__()
+
+        size = 30 # Taille par défaut
 
         # Définir la couleur du triangle (par exemple, rouge)
         self.color = (255, 0, 0)
@@ -28,5 +30,5 @@ class Spike(pg.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def update(self, dt, speed):
-        self.pos.x -= dt * speed
+        self.pos.x -= speed * dt
         self.rect.midbottom = self.pos
