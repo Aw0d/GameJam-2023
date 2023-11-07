@@ -28,7 +28,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground(0, self.screen.get_size()[1])
+        self.ground = Ground(self.screen.get_size())
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -106,6 +106,7 @@ class Game:
         self.all.clear(self.screen, self.clear_background)
         # Dessine tous les sprites dans la surface de l'écran
         self.background.draw(self.screen)
+        self.ground.draw(self.screen)
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
         pg.display.update(dirty)
