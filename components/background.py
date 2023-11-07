@@ -3,7 +3,7 @@ import pygame as pg
 
 class Background(pg.sprite.Sprite):
     background_img = [pg.image.load("images/background1.png"), pg.image.load("images/background2.png"),
-                      pg.image.load("images/background3.png")]
+                      pg.image.load("images/background3.png"), pg.image.load("images/background4.png")]
     
     def __init__(self, screen_size):
         super().__init__()
@@ -22,7 +22,7 @@ class Background(pg.sprite.Sprite):
             self.pos.x = 0
             self.image = self.image2
             self.rect = self.image.get_rect()
-            self.image2 = Background.background_img[random.randint(0, 2)]
+            self.image2 = Background.background_img[random.randint(0, 3)]
 
         self.rect.topleft = self.pos
 
