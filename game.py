@@ -4,6 +4,8 @@ from components.ground import Ground
 from components.spike import Spike
 from components.table import Table
 from components.chair import Chair
+from components.book import Book
+
 
 
 class Game:
@@ -23,11 +25,14 @@ class Game:
 
         # Définition de la vitesse du jeu
         self.speed = 0.4
+        # Compteur du nombre de bonus
+        self.bonus = 0
        
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
         
+        self.all.add(Book(800, self.ground.rect.top - 70))
         self.all.add(Chair(800, self.ground.rect.top))
         self.all.add(Table(1000, self.ground.rect.top))
         self.all.add(Chair(1200, self.ground.rect.top))
@@ -42,8 +47,7 @@ class Game:
         self.all.add(self.ground)
 
         self.player = Player()
-        self.player_group = pg.sprite.RenderUpdates()
-        self.player_group.add(self.player)
+        self.all.add(self.player)
 
         # Vrai si le jeu est fini
         self.isEnded = False
@@ -74,27 +78,23 @@ class Game:
             self.player.slide()
 
         # Met à jours tous les sprites
-        self.all.update(dt, self.speed)        
-        self.player.update(dt, hits)
+        self.all.update(dt, self.speed)
+        self.player._update(dt, hits)
+
         # Test de la collision entre le Player et les autres elements
         for sprite in hits:
-            if type(sprite).__name__ == "Table":
+            if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Chair":
                 # Si on n'est pas au dessus
-                if self.player.rect.bottom - (self.player.vel_y * dt) - 1 > sprite.rect.top:
+                if self.player.rect.bottom - abs(self.player.vel_y * dt) - 1 > sprite.rect.top:
                     self.isEnded = True
-            elif type(sprite).__name__ == "Chair":
-                # Si on n'est pas au dessus
-                if self.player.rect.bottom - (self.player.vel_y * dt) - 1 > sprite.rect.top:
-                    self.isEnded = True
-            elif type(sprite).__name__ != "Ground":
+            elif type(sprite).__name__ == "Spike":
                 self.isEnded = True
+            elif type(sprite).__name__ == "Book":
+                self.all.remove(sprite)
+                self.bonus += 1
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.background)
-        self.player_group.clear(self.screen, self.background)
-
-        #self.ground_group.draw(self.screen)
-        self.player_group.draw(self.screen)
         # Dessine tous les sprites dans la surface de l'écran
         dirty = self.all.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites

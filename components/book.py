@@ -1,27 +1,15 @@
 import pygame as pg
 
 class Book(pg.sprite.Sprite):
-    def __init__(self, x, y, size):
+    def __init__(self, x, y):
         super().__init__()
 
-        # Définir la couleur du triangle (par exemple, rouge)
-        self.color = (0, 255, 0)
+        size = 25
 
-        # Créer la surface pour le triangle
         self.image = pg.Surface((size, size))
-        self.image.fill((0, 0, 0, 0))  # Remplit la surface avec une couleur transparente
-        self.image.set_colorkey((0, 0, 0))  # Définit la couleur transparente
-
-        # Coordonnées des sommets du triangle
-        p1 = (size // 2, 0)
-        p2 = (0, size)
-        p3 = (size, size)
-
-        # Dessiner le triangle sur la surface
-        pg.draw.polygon(self.image, self.color, [p1, p2, p3])
-
-        # Obtenir le rectangle englobant le triangle
         self.rect = self.image.get_rect()
+        # Donne une couleur
+        self.image.fill("green")
 
         self.pos = pg.math.Vector2((x, y))
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
