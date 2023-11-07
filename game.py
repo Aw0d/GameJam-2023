@@ -31,20 +31,26 @@ class Game:
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
         self.all = pg.sprite.RenderUpdates()
+
         
         self.all.add(Book(800, self.ground.rect.top - 70))
         self.all.add(Chair(800, self.ground.rect.top))
         self.all.add(Table(1000, self.ground.rect.top))
         self.all.add(Chair(1200, self.ground.rect.top))
-        self.all.add(Table(1400, self.ground.rect.top))
-        self.all.add(Table(1600, self.ground.rect.top))
-        self.all.add(Table(1800, self.ground.rect.top))
+        self.all.add(Table(1400, self.ground.rect.top - 10 * 1))
+        self.all.add(Table(1600, self.ground.rect.top - 10 * 2))
+        self.all.add(Table(1800, self.ground.rect.top - 10 * 3))
         self.all.add(Spike(2000, self.ground.rect.top))
         self.all.add(Spike(2200, self.ground.rect.top))
         self.all.add(Spike(2400, self.ground.rect.top))
         self.all.add(Spike(2600, self.ground.rect.top))
         self.all.add(Spike(2800, self.ground.rect.top))
         self.all.add(self.ground)
+
+        self.objects_with_hitbox = pg.sprite.Group()
+        for sprite in self.all.spritedict:
+            if type(sprite).__name__ not in ["Player", "Book"]:
+                self.objects_with_hitbox.add(sprite) 
 
         self.player = Player()
         self.all.add(self.player)
@@ -67,7 +73,7 @@ class Game:
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
         # Collision entre le joueur et les autres objets
-        hits = pg.sprite.spritecollide(self.player, self.all, False)
+        hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
 
         # Récupération des touches appuyées
         pressed_keys = pg.key.get_pressed()
@@ -82,10 +88,10 @@ class Game:
         self.player._update(dt, hits)
 
         # Test de la collision entre le Player et les autres elements
-        for sprite in hits:
+        for sprite in pg.sprite.spritecollide(self.player, self.all, False):
             if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Chair":
                 # Si on n'est pas au dessus
-                if self.player.rect.bottom - abs(self.player.vel_y * dt) - 1 > sprite.rect.top:
+                if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
                     self.isEnded = True
             elif type(sprite).__name__ == "Spike":
                 self.isEnded = True

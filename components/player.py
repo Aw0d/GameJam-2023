@@ -37,7 +37,9 @@ class Player(pg.sprite.Sprite):
     def move(self,dt, hits):
         # Application de la gravité
         self.vel_y += self.acc_y
-        self.pos.y += self.vel_y * dt # Updates Position with new values
+        vel_max = 20
+        self.pos.y += min(self.vel_y * dt, vel_max) # Updates Position with new values
+            
         # Vérification de la colision avec le sol
         self.ground_colision(hits)
 
@@ -48,7 +50,8 @@ class Player(pg.sprite.Sprite):
       if self.vel_y > 0:
           if hits:
                 lowest = hits[0]
-                if self.pos.y < lowest.rect.bottom:
+                #print("collision avec: ", type(lowest).__name__ , self.rect.bottom, " > ", (lowest.rect.top - 1), (self.rect.bottom > lowest.rect.top - 1))
+                if self.rect.bottom > lowest.rect.top - 1 and self.rect.bottom < lowest.rect.bottom:
                     self.pos.y = lowest.rect.top + 1
                     self.vel_y = 0
                     self.jumping = False
