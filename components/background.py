@@ -1,10 +1,12 @@
+import random
 import pygame as pg
 
 class Background(pg.sprite.Sprite):
     def __init__(self, screen_size):
         super().__init__()
         self.screen_size = screen_size
-        self.image = pg.image.load("images/background.png")
+        i = random.randint(1, 3)
+        self.image = pg.image.load(f"images/background{i}.png")
         self.rect = self.image.get_rect()
 
         self.pos = pg.math.Vector2((screen_size[0], 0))
