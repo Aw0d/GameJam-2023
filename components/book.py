@@ -1,13 +1,11 @@
 import pygame as pg
 
-class Spike(pg.sprite.Sprite):
-    def __init__(self, x, y):
+class Book(pg.sprite.Sprite):
+    def __init__(self, x, y, size):
         super().__init__()
 
-        size = 30 # Taille par défaut
-
         # Définir la couleur du triangle (par exemple, rouge)
-        self.color = (255, 0, 0)
+        self.color = (0, 255, 0)
 
         # Créer la surface pour le triangle
         self.image = pg.Surface((size, size))
