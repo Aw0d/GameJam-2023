@@ -1,5 +1,5 @@
 import pygame as pg
-from Game import Game
+from game import Game
 
 # Fonction principale : pas de varaibles globales
 def main():

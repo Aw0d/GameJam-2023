@@ -1,9 +1,9 @@
 import pygame as pg
-from components.Player import Player
-from components.Ground import Ground
-from components.Spike import Spike
-from components.Table import Table
-from components.Chair import Chair
+from components.player import Player
+from components.ground import Ground
+from components.spike import Spike
+from components.table import Table
+from components.chair import Chair
 
 
 class Game:
