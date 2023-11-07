@@ -17,22 +17,63 @@ def main():
     clock = pg.time.Clock()
     # Nombre de millisecondes entre deux images 
     dt = 0
+    # Etat du jeu:
+    #   0: Menu principal
+    #   1: Jeu
+    #   2: Pause en jeu
+    #   3: Menu settings
+    #   4: Editeur de niveaux
+    #   ...
+    state = 1
 
     # Création d'une instance du jeu
     game = Game(screen)
 
     # Boucle de jeu
-    while game.isRunning():
+    previous_esc_state = False  # Variable pour garder en mémoire l'état précédent de la touche "échap"
+    running = True
+    while running:
+        for event in pg.event.get():
+            # Si on ferme la fenêtre, on arrête la boucle
+            match event.type:
+                case pg.QUIT:
+                    # On ferme la fenêtre
+                    running = False
+                case pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        # Vérifie si la touche "échap" est actuellement enfoncée
+                        if not previous_esc_state:
+                            if state == 1:
+                                state = 2
+                            elif state == 2:
+                                state = 1
+                        previous_esc_state = True  # Mémoriser l'état actuel de la touche "échap"
+                case pg.KEYUP:
+                    if event.key == pg.K_ESCAPE:
+                        previous_esc_state = False  # La touche "échap" est maintenant relâchée
 
-        # Limite la vitesse à 6O images max par secondes
-        # Calcule le temps réel entre deux images en millisecondes
-        dt = clock.tick(60)
 
-        # Met à jour le jeu sachant que dt millisecondes se sont écoulées
-        game.update(dt)
+        if state == 0: # Menu principal
+            pass
+        elif state == 1: # Jeu
+            state = game.isRunning()
 
-        # Affiche le nouvel état de l'écran
-        pg.display.flip()
+            # Limite la vitesse à 6O images max par secondes
+            # Calcule le temps réel entre deux images en millisecondes
+            dt = clock.tick(60)
+
+            # Met à jour le jeu sachant que dt millisecondes se sont écoulées
+            game.update(dt)
+
+            # Affiche le nouvel état de l'écran
+            pg.display.flip()
+
+        elif state == 2: # Pause en jeu
+            dt = clock.tick(60)
+        elif state == 3: # Menu settings
+            pass
+        elif state == 4: # Editeur de niveaux
+            pass
 
     # Fin utilisation de pygame
     pg.quit()

@@ -64,13 +64,8 @@ class Game:
 
     def isRunning(self):
         if self.isEnded:
-            return False
-        for event in pg.event.get():
-            match event.type:
-                case pg.QUIT:
-                    # On ferme la fenêtre
-                    return False
-        return True
+            return 0 # Menu Principal
+        return 1
     
     def update(self, dt : int):
         """
