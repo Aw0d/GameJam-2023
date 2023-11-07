@@ -6,10 +6,10 @@ class Player(pg.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pg.Surface((20, 60))
+        self.image = pg.image.load("images/characters/player/run1.png")
         self.rect = self.image.get_rect()
         # Donne une couleur
-        self.image.fill("blue")
+        #self.image.fill("blue")
 
         # Position
         self.pos = vec((200, 600))
