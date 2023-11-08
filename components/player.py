@@ -79,15 +79,21 @@ class Player(pg.sprite.Sprite):
                 self.pos.y = lowest.rect.top + 1
                 self.vel_y = 0
                 self.jumping = False
+                pg.mixer.music.load("sounds/running.mp3")
+                pg.mixer.music.play(1)
 
     def jump(self, hits):
         # If touching the ground, and not currently jumping, cause the player to jump.
         if hits and not self.jumping:
+            jump_sound = pg.mixer.Sound("sounds/jump.mp3")
+            pg.mixer.Sound.play(jump_sound)
             self.jumping = True
             self.move_frame = 0
             self.vel_y = -0.85
     
     def slide(self):
         if not self.sliding:
+            pg.mixer.music.load("sounds/slide.mp3")
+            pg.mixer.music.play(1)
             self.sliding = True
             self.move_frame = 0
