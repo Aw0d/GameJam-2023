@@ -114,6 +114,7 @@ class Game:
         else:
             # Collision entre le joueur et les autres objets
             hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
+            print(hits)
 
             # Récupération des touches appuyées
             pressed_keys = pg.key.get_pressed()
@@ -138,7 +139,8 @@ class Game:
                     if self.player.rect.bottom > sprite.rect.top + 30:
                         self.isLosed = True
                 elif isinstance(sprite, Spike):
-                    self.isLosed = True
+                    if self.player.rect.clipline(sprite.rect.bottomleft, sprite.rect.midtop) or self.player.rect.clipline(sprite.rect.bottomright, sprite.rect.midtop):
+                        self.isLosed = True
                 elif isinstance(sprite, Book):
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
