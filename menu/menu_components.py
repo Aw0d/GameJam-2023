@@ -2,13 +2,18 @@ import pygame as pg
 
 class Button(pg.sprite.Sprite):
     btn_image_green = [pg.image.load("images/menu/green_button.png"), pg.image.load("images/menu/green_button_hover.png")]
+    btn_image_small_green = [pg.image.load("images/menu/small_green_button.png"), pg.image.load("images/menu/small_green_button_hover.png")]
     btn_image_red = [pg.image.load("images/menu/red_button.png"), pg.image.load("images/menu/red_button_hover.png")]
 
     def __init__(self, pos, text, func, btn_color = "green"):
         super().__init__()
 
+        font_size = 24
         if btn_color == "red":
             self.images = Button.btn_image_red
+        elif btn_color == "small_green":
+            self.images = Button.btn_image_small_green
+            font_size = 18
         else:
             self.images = Button.btn_image_green
         
@@ -16,7 +21,7 @@ class Button(pg.sprite.Sprite):
         self.image = self.images[0]
         self.rect = self.image.get_rect()
 
-        self.text = Text(text, pos)
+        self.text = Text(text, pos, font_size)
 
         self.pos = pg.math.Vector2(pos)
 
@@ -50,7 +55,7 @@ class Text(pg.sprite.Sprite):
         self.rect.center = self.pos
 
     def render_text(self):
-        return self.font.render(self.text, False, self.color)
+        return self.font.render(self.text, True, self.color)
 
     def update_text(self, text):
         self.text = text
