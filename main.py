@@ -21,9 +21,8 @@ def main():
     # Etat du jeu:
     #   0: Menu principal
     #   1: Jeu
-    #   2: Pause en jeu
-    #   3: Menu settings
-    #   4: Editeur de niveaux
+    #   2: Menu settings
+    #   3: Editeur de niveaux
     #   ...
     state = 0
 
@@ -33,27 +32,15 @@ def main():
     game = None
 
     # Boucle de jeu
-    previous_esc_state = False  # Variable pour garder en mémoire l'état précédent de la touche "échap"
     running = True
     while running:
-        for event in pg.event.get():
+        events = pg.event.get()
+        for event in events:
             # Si on ferme la fenêtre, on arrête la boucle
             match event.type:
                 case pg.QUIT:
                     # On ferme la fenêtre
                     running = False
-                case pg.KEYDOWN:
-                    if event.key == pg.K_ESCAPE:
-                        # Vérifie si la touche "échap" est actuellement enfoncée
-                        if not previous_esc_state:
-                            if state == 1:
-                                state = 2
-                            elif state == 2:
-                                state = 1
-                        previous_esc_state = True  # Mémoriser l'état actuel de la touche "échap"
-                case pg.KEYUP:
-                    if event.key == pg.K_ESCAPE:
-                        previous_esc_state = False  # La touche "échap" est maintenant relâchée
 
 
         if state == 0: # Menu principal
@@ -85,16 +72,14 @@ def main():
             dt = clock.tick(60)
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
-            game.update(dt)
+            game.update(dt, events)
 
             # Affiche le nouvel état de l'écran
             pg.display.flip()
 
-        elif state == 2: # Pause en jeu
-            dt = clock.tick(60)
-        elif state == 3: # Menu settings
+        elif state == 2: # Menu settings
             pass
-        elif state == 4: # Editeur de niveaux
+        elif state == 3: # Editeur de niveaux
             pass
 
     # Fin utilisation de pygame

@@ -64,57 +64,69 @@ class Game:
 
         # Vrai si le jeu est fini
         self.isEnded = False
+        self.isPaused = False
+
+        #self.previous_esc_state = False  # Variable pour garder en mémoire l'état précédent de la touche "échap"
 
     def isRunning(self):
         if self.isEnded:
             return 0 # Menu Principal
         return 1
     
-    def update(self, dt : int):
+    def update(self, dt : int, events):
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
-        # Collision entre le joueur et les autres objets
-        hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
+        for event in events:
+            # Si on ferme la fenêtre, on arrête la boucle
+            match event.type:
+                case pg.KEYUP:
+                    if event.key == pg.K_ESCAPE:
+                        self.isPaused = not self.isPaused
 
-        # Récupération des touches appuyées
-        pressed_keys = pg.key.get_pressed()
+        if self.isPaused:
+            pass
+        else:
+            # Collision entre le joueur et les autres objets
+            hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
 
-        if pressed_keys[pg.K_UP]:
-            self.player.jump(hits)
-        if pressed_keys[pg.K_DOWN]:
-            self.player.slide()
+            # Récupération des touches appuyées
+            pressed_keys = pg.key.get_pressed()
 
-        # Met à jours tous les sprites
-        self.all.update(dt, self.speed)
-        self.player._update(dt, hits)
+            if pressed_keys[pg.K_UP]:
+                self.player.jump(hits)
+            if pressed_keys[pg.K_DOWN]:
+                self.player.slide()
 
-        # Test de la collision entre le Player et les autres elements
-        print(hits)
-        for sprite in hits:
-            if type(sprite).__name__ == "Table":
-                # Si on n'est pas au dessus
-                if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
+            # Met à jours tous les sprites
+            self.all.update(dt, self.speed)
+            self.player._update(dt, hits)
+
+            # Test de la collision entre le Player et les autres elements
+            for sprite in hits:
+                if type(sprite).__name__ == "Table":
+                    # Si on n'est pas au dessus
+                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
+                        self.isEnded = True
+                elif type(sprite).__name__ == "Chair":
+                    # Si on n'est pas au dessus
+                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) > sprite.rect.bottom - 10:
+                        self.isEnded = True
+                elif type(sprite).__name__ == "Spike":
                     self.isEnded = True
-            elif type(sprite).__name__ == "Chair":
-                # Si on n'est pas au dessus
-                if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) > sprite.rect.bottom - 10:
-                    self.isEnded = True
-            elif type(sprite).__name__ == "Spike":
-                self.isEnded = True
-            elif type(sprite).__name__ == "Book":
-                #print("touché")
-                self.all.remove(sprite)
-                self.objects_with_hitbox.remove(sprite)
-                self.bonus += 1
-                self.hud.update_score(self.bonus)
+                elif type(sprite).__name__ == "Book":
+                    #print("touché")
+                    self.all.remove(sprite)
+                    self.objects_with_hitbox.remove(sprite)
+                    self.bonus += 1
+                    self.hud.update_score(self.bonus)
 
-        # Vide l'écran en replacant le background
-        self.all.clear(self.screen, self.clear_background)
-        # Dessine tous les sprites dans la surface de l'écran
-        self.background.draw(self.screen)
-        self.ground.draw(self.screen)
-        dirty = self.all.draw(self.screen)
-        self.hud.draw(self.screen)
-        # Remplace le background des zones modifiées par le mouvement des sprites
-        pg.display.update(dirty)
+            # Vide l'écran en replacant le background
+            self.all.clear(self.screen, self.clear_background)
+            # Dessine tous les sprites dans la surface de l'écran
+            self.background.draw(self.screen)
+            self.ground.draw(self.screen)
+            dirty = self.all.draw(self.screen)
+            self.hud.draw(self.screen)
+            # Remplace le background des zones modifiées par le mouvement des sprites
+            pg.display.update(dirty)
