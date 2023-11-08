@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         # Position
         self.pos = vec((200, 200))
         self.vel_y = 0
-        self.acc_y = 0.09
+        self.acc_y = 0.06
 
         self.frame = 0
         self.jumping = False
@@ -85,7 +85,7 @@ class Player(pg.sprite.Sprite):
         if hits and not self.jumping:
             self.jumping = True
             self.move_frame = 0
-            self.vel_y = -1.1
+            self.vel_y = -0.9
     
     def slide(self):
         if not self.sliding:

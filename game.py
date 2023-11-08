@@ -17,7 +17,7 @@ class Game:
         self.screen = screen
 
         # Définition de la vitesse du jeu
-        self.speed = 0.3
+        self.speed = 0.4
         # Compteur du nombre de bonus
         self.bonus = 0
 
@@ -37,7 +37,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground((10000, 80), (0, self.screen.get_height() - 80))
+        self.ground = Ground((10000, 80), (0, self.screen.get_height()))
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -46,19 +46,20 @@ class Game:
         self.all.add(self.background)
         self.all.add(self.ground)
 
-        self.all.add(Book(800, self.ground.rect.top - 70))
-        self.all.add(Chair(800, self.ground.rect.top))
-        self.all.add(Table(1000, self.ground.rect.top))
-        self.all.add(Chair(1200, self.ground.rect.top))
-        self.all.add(Table(1400, self.ground.rect.top - 10 * 1))
-        self.all.add(Table(1600, self.ground.rect.top - 10 * 2))
-        self.all.add(Table(1800, self.ground.rect.top - 10 * 3))
-        self.all.add(Ground((600, 60), (1950, 500)))
+        self.all.add(Spike(1000, self.ground.rect.top))
+
         self.all.add(Spike(2000, self.ground.rect.top))
-        self.all.add(Spike(2200, self.ground.rect.top))
-        self.all.add(Spike(2400, self.ground.rect.top))
-        self.all.add(Spike(2600, self.ground.rect.top))
-        self.all.add(Spike(2800, self.ground.rect.top))
+        self.all.add(Spike(2030, self.ground.rect.top))
+
+        self.all.add(Spike(3000, self.ground.rect.top))
+        self.all.add(Spike(3030, self.ground.rect.top))
+        self.all.add(Ground((30, 30), (3070, self.ground.rect.top)))
+        self.all.add(Spike(3100, self.ground.rect.top))
+        self.all.add(Spike(3130, self.ground.rect.top))
+        self.all.add(Ground((30, 60), (3170, self.ground.rect.top)))
+        self.all.add(Spike(3200, self.ground.rect.top))
+        self.all.add(Spike(3230, self.ground.rect.top))
+        self.all.add(Ground((30, 90), (3270, self.ground.rect.top)))
 
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
@@ -126,14 +127,15 @@ class Game:
             self.player._update(dt, hits)
 
             # Test de la collision entre le Player et les autres elements
+            print(hits)
             for sprite in hits:
                 if isinstance(sprite, (Table)):
                     # Si on n'est pas au dessus ou en dessous
-                    if self.player.rect.bottom > sprite.rect.top + 25 and self.player.rect.top < sprite.rect.bottom - 50:
+                    if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 50:
                         self.isLosed = True
                 elif isinstance(sprite, (Chair, Ground)):
                     # Si on n'est pas au dessus
-                    if self.player.rect.bottom > sprite.rect.top + 25:
+                    if self.player.rect.bottom > sprite.rect.top + 30:
                         self.isLosed = True
                 elif isinstance(sprite, Spike):
                     self.isLosed = True

@@ -11,8 +11,8 @@ class Book(pg.sprite.Sprite):
 
         self.pos = pg.math.Vector2((x, y))
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
-        self.rect.midbottom = self.pos
+        self.rect.bottomleft = self.pos
 
     def update(self, dt, speed):
         self.pos.x -= speed * dt
-        self.rect.midbottom = self.pos
+        self.rect.bottomleft = self.pos
