@@ -117,18 +117,17 @@ class Game:
 
             # Test de la collision entre le Player et les autres elements
             for sprite in hits:
-                if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Ground":
+                if isinstance(sprite, Table) or isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
                         self.isEnded = True
-                elif type(sprite).__name__ == "Chair":
+                elif isinstance(sprite, Chair):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) > sprite.rect.bottom - 10:
                         self.isEnded = True
-                elif type(sprite).__name__ == "Spike":
+                elif isinstance(sprite, Spike):
                     self.isEnded = True
-                elif type(sprite).__name__ == "Book":
-                    #print("touché")
+                elif isinstance(sprite, Book):
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
