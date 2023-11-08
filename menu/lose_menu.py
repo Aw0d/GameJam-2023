@@ -9,8 +9,8 @@ class LoseMenu():
 
         lose_text = Text("Perdu !", (screen.get_width()/2, 150), 56, (0, 0, 0))
 
-        retry_button = Button((screen.get_width()/2, 325), 'img/menu_button.png', lambda:"retry")
-        menu_button = Button((screen.get_width()/2, 450), 'img/menu_button.png', lambda:"menu")
+        retry_button = Button((screen.get_width()/2, 325), 'images/menu/retry_button.png', lambda:"retry")
+        menu_button = Button((screen.get_width()/2, 450), 'images/menu/menu_button.png', lambda:"menu")
 
         self.list_buttons = [retry_button, menu_button]
 
