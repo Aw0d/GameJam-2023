@@ -1,11 +1,23 @@
 import pygame as pg
 
 class Button(pg.sprite.Sprite):
-    def __init__(self, pos, image, func):
+    btn_image_green = [pg.image.load("images/menu/green_button.png"), pg.image.load("images/menu/green_button_hover.png")]
+    btn_image_red = [pg.image.load("images/menu/red_button.png"), pg.image.load("images/menu/red_button_hover.png")]
+
+    def __init__(self, pos, text, func, btn_color = "green"):
         super().__init__()
 
-        self.image = pg.image.load(image)
+        if btn_color == "red":
+            self.images = Button.btn_image_red
+        else:
+            self.images = Button.btn_image_green
+        
+
+        self.image = self.images[0]
         self.rect = self.image.get_rect()
+
+        self.text = Text(text, pos)
+        print("text ", text, " self.rect.center ", pos)
 
         self.pos = pg.math.Vector2(pos)
 
@@ -14,6 +26,15 @@ class Button(pg.sprite.Sprite):
         #on enregistre l'Etat du button(True si il est clicked, FALSE sinon)
         self.state = False
         self.func = func
+
+    def draw_text(self, screen):
+        screen.blit(self.text.image, (self.text.pos.x - self.text.image.get_width()/2, self.text.pos.y - self.text.image.get_height()/2))  # Dessinez le texte sur le bouton
+
+    def hover(self, isHover):
+        if isHover:
+            self.image = self.images[1]
+        else:
+            self.image = self.images[0]
 
 class Text(pg.sprite.Sprite):
     def __init__(self, text, pos, font_size=36, color=(255, 255, 255), font_name=None):

@@ -9,10 +9,10 @@ class MainMenu():
 
         titre_text = Text("UniversityRush", (512, 100), 100)
 
-        start_button = Button((512, 300), 'images/menu/start_button.png', lambda: "play")
-        menu_button = Button((512, 425), 'images/menu/option_button.png',lambda:print("OPTIONS"))
-        inspect_button = Button((512, 550), 'images/menu/custom_button.png',lambda:print("MODE INSPECTION"))
-        exit_button = Button((512, 675), 'images/menu/quit_button.png',lambda: "quit")
+        start_button = Button((512, 300), "Play", lambda: "play")
+        menu_button = Button((512, 425), "Settings", lambda:print("OPTIONS"))
+        inspect_button = Button((512, 550), "Level Editor", lambda:print("MODE INSPECTION"))
+        exit_button = Button((512, 675), "Exit", lambda: "quit", "red")
         
         self.list_buttons = [start_button, menu_button, exit_button, inspect_button]
         
@@ -32,9 +32,12 @@ class MainMenu():
         pos = pg.mouse.get_pos()
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
+                button.hover(True)
                 if pg.mouse.get_pressed()[0] == 1 and button.state == False:
                     button.state = True
                     return button.func()
+            else:
+                button.hover(False)
                     
             if pg.mouse.get_pressed()[0] == 0:
                 button.state = False
@@ -43,6 +46,9 @@ class MainMenu():
         self.screen.blit(self.background,(0,0))
 
         dirty = self.all.draw(self.screen)
+
+        for button in self.list_buttons:
+            button.draw_text(self.screen)
         pg.display.update(dirty)
         
 if __name__ == "__main__":
