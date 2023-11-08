@@ -23,8 +23,7 @@ class WinMenu():
         self.all.add(menu_button)
 
         self.background = pg.Surface(size)
-        self.background.fill((68,114,179))
-        self.background.set_alpha(190)
+        self.background.set_alpha(0)
 
     def update(self):
         pos = pg.mouse.get_pos()
