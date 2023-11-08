@@ -53,13 +53,13 @@ class Game:
 
         self.all.add(Spike(3000, self.ground.rect.top))
         self.all.add(Spike(3030, self.ground.rect.top))
-        self.all.add(Ground((30, 30), (3070, self.ground.rect.top)))
-        self.all.add(Spike(3100, self.ground.rect.top))
+        self.all.add(Ground((50, 30), (3070, self.ground.rect.top)))
         self.all.add(Spike(3130, self.ground.rect.top))
-        self.all.add(Ground((30, 60), (3170, self.ground.rect.top)))
-        self.all.add(Spike(3200, self.ground.rect.top))
-        self.all.add(Spike(3230, self.ground.rect.top))
-        self.all.add(Ground((30, 90), (3270, self.ground.rect.top)))
+        self.all.add(Spike(3160, self.ground.rect.top))
+        self.all.add(Ground((50, 60), (3200, self.ground.rect.top)))
+        self.all.add(Spike(3260, self.ground.rect.top))
+        self.all.add(Spike(3290, self.ground.rect.top))
+        self.all.add(Ground((50, 90), (3320, self.ground.rect.top)))
 
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
@@ -90,11 +90,12 @@ class Game:
             match event.type:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
-                        if self.isPaused:
-                            self.isPaused = not self.isPaused
-                        else:
-                            self.isPaused = not self.isPaused
-                            self.menu_pause.show()
+                        if not self.isLosed:
+                            if self.isPaused:
+                                self.isPaused = not self.isPaused
+                            else:
+                                self.isPaused = not self.isPaused
+                                self.menu_pause.show()
 
         if self.isPaused:
             action = self.menu_pause.update()

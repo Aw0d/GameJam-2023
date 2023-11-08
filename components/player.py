@@ -85,7 +85,7 @@ class Player(pg.sprite.Sprite):
         if hits and not self.jumping:
             self.jumping = True
             self.move_frame = 0
-            self.vel_y = -0.9
+            self.vel_y = -0.85
     
     def slide(self):
         if not self.sliding:
