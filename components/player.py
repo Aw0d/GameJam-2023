@@ -12,15 +12,12 @@ class Player(pg.sprite.Sprite):
     pg.mixer.init()
     jump_sound = pg.mixer.Sound("sounds/jump.mp3")
     slide_sound = pg.mixer.Sound("sounds/slide.mp3")
-    #running_sound = pg.mixer.Sound("sounds/running.mp3")
+    running_sound = pg.mixer.Sound("sounds/running.mp3")
 
     def __init__(self):
         super().__init__()
         self.image = Player.run_ani[0]
         self.rect = self.image.get_rect()
-        # Donne une couleur
-        #self.image.fill("blue")
-
 
         # Position
         self.pos = pg.math.Vector2((200, 200))
@@ -33,6 +30,8 @@ class Player(pg.sprite.Sprite):
         self.slide_timer = 0  # Initialisation du compteur de glissade
         self.move_frame = 0
 
+        self.running_channel = pg.mixer.Sound.play(Player.running_sound, -1)
+
     def _update(self,dt, hits):
         if self.sliding:
             # Compteur pour la durée de la glissade
@@ -41,6 +40,7 @@ class Player(pg.sprite.Sprite):
                 # Rétablir la hauteur normale du personnage
                 self.sliding = False
                 self.slide_timer = 0
+                self.running_channel.unpause()
 
         self.frame += 1
 
@@ -81,12 +81,15 @@ class Player(pg.sprite.Sprite):
             if self.rect.bottom > lowest.rect.top - 2 and self.rect.bottom < lowest.rect.bottom:
                 self.pos.y = lowest.rect.top + 1
                 self.vel_y = 0
-                self.jumping = False
+                if self.jumping == True:
+                    self.jumping = False
+                    self.running_channel.unpause()
 
 
     def jump(self, hits):
         # If touching the ground, and not currently jumping, cause the player to jump.
         if hits and not self.jumping:
+            self.running_channel.pause()
             pg.mixer.Sound.play(Player.jump_sound)
             self.jumping = True
             self.move_frame = 0
@@ -94,6 +97,7 @@ class Player(pg.sprite.Sprite):
     
     def slide(self):
         if not self.sliding:
+            self.running_channel.pause()
             pg.mixer.Sound.play(Player.slide_sound)
             self.sliding = True
             self.move_frame = 0
