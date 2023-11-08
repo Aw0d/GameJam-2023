@@ -34,7 +34,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground(self.screen.get_size())
+        self.ground = Ground((10000, 80), (0, self.screen.get_height() - 80))
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -55,7 +55,6 @@ class Game:
         self.all.add(Spike(2400, self.ground.rect.top))
         self.all.add(Spike(2600, self.ground.rect.top))
         self.all.add(Spike(2800, self.ground.rect.top))
-        self.all.add(self.ground)
 
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
@@ -138,7 +137,6 @@ class Game:
             self.all.clear(self.screen, self.clear_background)
             # Dessine tous les sprites dans la surface de l'écran
             self.background.draw(self.screen)
-            self.ground.draw(self.screen)
             dirty = self.all.draw(self.screen)
             self.hud.draw(self.screen)
             # Remplace le background des zones modifiées par le mouvement des sprites
