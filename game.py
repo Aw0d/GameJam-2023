@@ -67,7 +67,7 @@ class Game:
         self.all.add(EndGame(8800, self.ground.rect.top))
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
-            if type(sprite).__name__ not in ["Background", "Player"]:
+            if not isinstance(sprite, (Background, Player)):
                 self.objects_with_hitbox.add(sprite) 
 
         self.player = Player()
