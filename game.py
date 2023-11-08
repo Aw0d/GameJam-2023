@@ -9,6 +9,7 @@ from components.book import Book
 
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
+from menu.lose_menu import LoseMenu
 
 class Game:
     def __init__(self, screen: pg.Surface):
@@ -24,6 +25,8 @@ class Game:
         self.hud = HUD(self.screen.get_size())
         # Création du menu pause
         self.menu_pause = PauseMenu(screen)
+        # Création du menu lose
+        self.menu_lose = LoseMenu(screen)
 
         # Crée une surface pour le fond du jeu de même taille que la fenêtre pour effacer le contenu affiché
         self.clear_background = pg.Surface(self.screen.get_size())
@@ -68,6 +71,7 @@ class Game:
         # Vrai si le jeu est fini
         self.isEnded = False
         self.isPaused = False
+        self.isLosed = False
         self.retry = False
 
     def state(self):
@@ -94,8 +98,14 @@ class Game:
         if self.isPaused:
             action = self.menu_pause.update()
             if action == "continue":
-                self.isPaused = not self.isPaused
+                self.isPaused = False
             elif action == "retry":
+                self.retry = True
+            elif action == "menu":
+                self.isEnded = True
+        elif self.isLosed:
+            action = self.menu_lose.update()
+            if action == "retry":
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
@@ -119,25 +129,28 @@ class Game:
             for sprite in hits:
                 if isinstance(sprite, (Table)):
                     # Si on n'est pas au dessus ou en dessous
-                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
-                        self.isEnded = True
+                    if self.player.rect.bottom > sprite.rect.bottom:
+                        self.isLosed = True
                 elif isinstance(sprite, (Chair, Ground)):
                     # Si on n'est pas au dessus
-                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
-                        self.isEnded = True
+                    if self.player.rect.bottom > sprite.rect.bottom:
+                        self.isLosed = True
                 elif isinstance(sprite, Spike):
-                    self.isEnded = True
+                    self.isLosed = True
                 elif isinstance(sprite, Book):
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
                     self.hud.update_score(self.bonus)
 
-            # Vide l'écran en replacant le background
-            self.all.clear(self.screen, self.clear_background)
-            # Dessine tous les sprites dans la surface de l'écran
-            self.background.draw(self.screen)
-            dirty = self.all.draw(self.screen)
-            self.hud.draw(self.screen)
-            # Remplace le background des zones modifiées par le mouvement des sprites
-            pg.display.update(dirty)
+            if self.isLosed:
+                self.menu_lose.show()
+            else:
+                # Vide l'écran en replacant le background
+                self.all.clear(self.screen, self.clear_background)
+                # Dessine tous les sprites dans la surface de l'écran
+                self.background.draw(self.screen)
+                dirty = self.all.draw(self.screen)
+                self.hud.draw(self.screen)
+                # Remplace le background des zones modifiées par le mouvement des sprites
+                pg.display.update(dirty)
