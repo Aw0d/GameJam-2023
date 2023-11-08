@@ -129,11 +129,11 @@ class Game:
             for sprite in hits:
                 if isinstance(sprite, (Table)):
                     # Si on n'est pas au dessus ou en dessous
-                    if self.player.rect.bottom > sprite.rect.bottom:
+                    if self.player.rect.bottom > sprite.rect.top + 25 and self.player.rect.top < sprite.rect.bottom - 50:
                         self.isLosed = True
                 elif isinstance(sprite, (Chair, Ground)):
                     # Si on n'est pas au dessus
-                    if self.player.rect.bottom > sprite.rect.bottom:
+                    if self.player.rect.bottom > sprite.rect.top + 25:
                         self.isLosed = True
                 elif isinstance(sprite, Spike):
                     self.isLosed = True
