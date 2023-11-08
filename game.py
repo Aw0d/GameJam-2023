@@ -95,7 +95,7 @@ class Game:
             match event.type:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
-                        if not self.isLosed:
+                        if not self.isLosed and not self.isWin:
                             if self.isPaused:
                                 self.isPaused = not self.isPaused
                             else:
