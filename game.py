@@ -106,7 +106,7 @@ class Game:
 
         if self.isPaused:
             self.menu_pause.show()
-            action = self.menu_pause.update()
+            action = self.menu_pause.update(events)
             if action == "continue":
                 self.isPaused = False
             elif action == "retry":
@@ -115,14 +115,14 @@ class Game:
                 self.isEnded = True
         elif self.isLosed:
             self.menu_lose.show()
-            action = self.menu_lose.update()
+            action = self.menu_lose.update(events)
             if action == "retry":
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
         elif self.isWin:
             self.menu_win.show(self.bonus)
-            action = self.menu_win.update()
+            action = self.menu_win.update(events)
             if action == "retry":
                 self.retry = True
             elif action == "menu":

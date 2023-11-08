@@ -21,14 +21,17 @@ class CreditsMenu():
 
         self.background = pg.image.load("images/menu/fond.png")
 
-    def update(self):
+    def update(self, events):
         # Détection des hovers et des clicks sur les boutons
         pos = pg.mouse.get_pos()
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
                 button.hover(True)
-                if pg.mouse.get_pressed()[0] == 1:
-                    return button.func()
+                for event in events:
+                    match event.type:
+                        case pg.MOUSEBUTTONUP:
+                            if event.button == pg.BUTTON_LEFT:
+                                return button.func()                    
             else:
                 button.hover(False)
 
