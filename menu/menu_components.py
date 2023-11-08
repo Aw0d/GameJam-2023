@@ -17,7 +17,6 @@ class Button(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.text = Text(text, pos)
-        print("text ", text, " self.rect.center ", pos)
 
         self.pos = pg.math.Vector2(pos)
 
