@@ -27,8 +27,6 @@ class Button(pg.sprite.Sprite):
 
         self.rect.center = self.pos
 
-        #on enregistre l'Etat du button(True si il est clicked, FALSE sinon)
-        self.state = False
         self.func = func
 
     def draw_text(self, screen):

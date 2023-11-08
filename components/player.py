@@ -31,6 +31,7 @@ class Player(pg.sprite.Sprite):
         self.move_frame = 0
 
         self.channel = pg.mixer.Channel(1)
+        self.channel.play(Player.running_sound , -1)
 
     def _update(self,dt, hits):
         if self.sliding:
