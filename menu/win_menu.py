@@ -31,8 +31,7 @@ class WinMenu():
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
                 button.hover(True)
-                if pg.mouse.get_pressed()[0] == 1 and button.state == False:
-                    button.state = True
+                if pg.mouse.get_pressed()[0] == 1:
                     return button.func()
             else:
                 button.hover(False)
