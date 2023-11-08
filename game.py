@@ -67,7 +67,7 @@ class Game:
         self.all.add(EndGame(8800, self.ground.rect.top))
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
-            if type(sprite).__name__ not in ["Background", "Player"]:
+            if not isinstance(sprite, (Background, Player)):
                 self.objects_with_hitbox.add(sprite) 
 
         self.player = Player()
@@ -95,7 +95,7 @@ class Game:
             match event.type:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
-                        if not self.isLosed:
+                        if not self.isLosed and not self.isWin:
                             if self.isPaused:
                                 self.isPaused = not self.isPaused
                             else:
