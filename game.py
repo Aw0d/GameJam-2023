@@ -50,6 +50,7 @@ class Game:
         self.all.add(Table(1400, self.ground.rect.top - 10 * 1))
         self.all.add(Table(1600, self.ground.rect.top - 10 * 2))
         self.all.add(Table(1800, self.ground.rect.top - 10 * 3))
+        self.all.add(Ground((600, 60), (1950, 500)))
         self.all.add(Spike(2000, self.ground.rect.top))
         self.all.add(Spike(2200, self.ground.rect.top))
         self.all.add(Spike(2400, self.ground.rect.top))
@@ -116,7 +117,7 @@ class Game:
 
             # Test de la collision entre le Player et les autres elements
             for sprite in hits:
-                if type(sprite).__name__ == "Table":
+                if type(sprite).__name__ == "Table" or type(sprite).__name__ == "Ground":
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
                         self.isEnded = True

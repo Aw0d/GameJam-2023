@@ -14,7 +14,7 @@ class Ground(pg.sprite.Sprite):
 
         self.pos = pg.math.Vector2(pos)
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
-        self.rect.topleft = self.pos
+        self.rect.bottomleft = self.pos
 
         for x in range(0, self.size[0], self.tile_size[0]):
             for y in range(0, self.size[1], self.tile_size[1]):
@@ -22,7 +22,7 @@ class Ground(pg.sprite.Sprite):
 
     def update(self, dt, speed):
         self.pos.x = self.pos.x - speed * dt
-        self.rect.topleft = self.pos
+        self.rect.bottomleft = self.pos
 
 
         
