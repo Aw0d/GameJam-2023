@@ -9,7 +9,7 @@ def main():
     # Initalisation du module de gestion des fonts
     pg.font.init()
     # Donne un nom à la fenêtre 
-    pg.display.set_caption("GAME")
+    pg.display.set_caption("UniversityRush")
     # Taille de l'écran imposée
     screenSize = (1024,768)
     # Crée la surface qui va servir de surface de jeu
