@@ -9,9 +9,9 @@ class PauseMenu():
 
         pause_text = Text("Jeu en pause !", (screen.get_width()/2, 150), 56, (0, 0, 0))
 
-        continue_button = Button((screen.get_width()/2, 300), 'img/menu_button.png', lambda:"continue")
-        retry_button = Button((screen.get_width()/2, 425), 'img/menu_button.png', lambda:"retry")
-        menu_button = Button((screen.get_width()/2, 550), 'img/menu_button.png', lambda:"menu")
+        continue_button = Button((screen.get_width()/2, 300), 'images/menu/continue_button.png', lambda:"continue")
+        retry_button = Button((screen.get_width()/2, 425), 'images/menu/retry_button.png', lambda:"retry")
+        menu_button = Button((screen.get_width()/2, 550), 'images/menu/menu_button.png', lambda:"menu")
 
         self.list_buttons = [continue_button, retry_button, menu_button]
 
