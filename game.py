@@ -100,9 +100,9 @@ class Game:
                                 self.isPaused = not self.isPaused
                             else:
                                 self.isPaused = not self.isPaused
-                                self.menu_pause.show()
 
         if self.isPaused:
+            self.menu_pause.show()
             action = self.menu_pause.update()
             if action == "continue":
                 self.isPaused = False
@@ -111,12 +111,14 @@ class Game:
             elif action == "menu":
                 self.isEnded = True
         elif self.isLosed:
+            self.menu_lose.show()
             action = self.menu_lose.update()
             if action == "retry":
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
         elif self.isWin:
+            self.menu_win.show(self.bonus)
             action = self.menu_win.update()
             if action == "retry":
                 self.retry = True
@@ -159,11 +161,7 @@ class Game:
                 elif isinstance(sprite, EndGame):
                     self.isWin = True
 
-            if self.isLosed:
-                self.menu_lose.show()
-            elif self.isWin:
-                self.menu_win.show(self.bonus)
-            else:
+            if not self.isLosed and not self.isWin:
                 # Vide l'écran en replacant le background
                 self.all.clear(self.screen, self.clear_background)
                 # Dessine tous les sprites dans la surface de l'écran

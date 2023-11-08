@@ -9,9 +9,9 @@ class PauseMenu():
 
         pause_text = Text("Jeu en pause !", (screen.get_width()/2, 150), 56, (0, 0, 0))
 
-        continue_button = Button((screen.get_width()/2, 300), 'images/menu/continue_button.png', lambda:"continue")
-        retry_button = Button((screen.get_width()/2, 425), 'images/menu/retry_button.png', lambda:"retry")
-        menu_button = Button((screen.get_width()/2, 550), 'images/menu/menu_button.png', lambda:"menu")
+        continue_button = Button((screen.get_width()/2, 300), "Continue", lambda:"continue")
+        retry_button = Button((screen.get_width()/2, 425), "Retry", lambda:"retry")
+        menu_button = Button((screen.get_width()/2, 550), "Menu", lambda:"menu", "red")
 
         self.list_buttons = [continue_button, retry_button, menu_button]
 
@@ -29,15 +29,18 @@ class PauseMenu():
         pos = pg.mouse.get_pos()
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
+                button.hover(True)
                 if pg.mouse.get_pressed()[0] == 1 and button.state == False:
                     button.state = True
                     return button.func()
-                    
-            if pg.mouse.get_pressed()[0] == 0:
-                button.state = False
+            else:
+                button.hover(False)
 
     def show(self):
         self.screen.blit(self.background, (self.screen.get_width()/2 - 500/2, self.screen.get_height()/2 - 600/2))
 
         dirty = self.all.draw(self.screen)
+
+        for button in self.list_buttons:
+            button.draw_text(self.screen)
         pg.display.update(dirty)
