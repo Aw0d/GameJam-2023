@@ -117,13 +117,13 @@ class Game:
 
             # Test de la collision entre le Player et les autres elements
             for sprite in hits:
-                if isinstance(sprite, Table) or isinstance(sprite, Ground):
-                    # Si on n'est pas au dessus
+                if isinstance(sprite, (Table)):
+                    # Si on n'est pas au dessus ou en dessous
                     if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
                         self.isEnded = True
-                elif isinstance(sprite, Chair):
+                elif isinstance(sprite, (Chair, Ground)):
                     # Si on n'est pas au dessus
-                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) > sprite.rect.bottom - 10:
+                    if self.player.rect.bottom - abs(min(self.player.vel_y * dt, 20)) - 1 > sprite.rect.bottom:
                         self.isEnded = True
                 elif isinstance(sprite, Spike):
                     self.isEnded = True
