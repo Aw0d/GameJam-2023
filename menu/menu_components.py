@@ -12,11 +12,11 @@ class Button(pg.sprite.Sprite):
         self.func = func
 
 class Text(pg.sprite.Sprite):
-    def __init__(self, text, x, y, font_size=36, color=(255, 255, 255), font_name=None):
+    def __init__(self, text, pos, font_size=36, color=(255, 255, 255), font_name=None):
         super().__init__()
 
         self.text = text
-        self.pos = pg.math.Vector2((x, y))
+        self.pos = pg.math.Vector2(pos)
         self.color = color
         self.font_size = font_size
         self.font_name = font_name

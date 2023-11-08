@@ -7,7 +7,7 @@ from components.table import Table
 from components.chair import Chair
 from components.book import Book
 
-
+from menu.hud import HUD
 
 class Game:
     def __init__(self, screen: pg.Surface):
@@ -18,6 +18,9 @@ class Game:
         self.speed = 0.3
         # Compteur du nombre de bonus
         self.bonus = 0
+
+        # Création du HUD
+        self.hud = HUD(self.screen.get_size())
 
         # Crée une surface pour le fond du jeu de même taille que la fenêtre pour effacer le contenu affiché
         self.clear_background = pg.Surface(self.screen.get_size())
@@ -101,6 +104,7 @@ class Game:
             elif type(sprite).__name__ == "Book":
                 self.all.remove(sprite)
                 self.bonus += 1
+                self.hud.update_score(self.bonus)
 
         # Vide l'écran en replacant le background
         self.all.clear(self.screen, self.clear_background)
@@ -108,5 +112,6 @@ class Game:
         self.background.draw(self.screen)
         self.ground.draw(self.screen)
         dirty = self.all.draw(self.screen)
+        self.hud.draw(self.screen)
         # Remplace le background des zones modifiées par le mouvement des sprites
         pg.display.update(dirty)
