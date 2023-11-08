@@ -90,6 +90,7 @@ class Game:
         self.player._update(dt, hits)
 
         # Test de la collision entre le Player et les autres elements
+        print(hits)
         for sprite in hits:
             if type(sprite).__name__ == "Table":
                 # Si on n'est pas au dessus
@@ -102,7 +103,9 @@ class Game:
             elif type(sprite).__name__ == "Spike":
                 self.isEnded = True
             elif type(sprite).__name__ == "Book":
+                #print("touché")
                 self.all.remove(sprite)
+                self.objects_with_hitbox.remove(sprite)
                 self.bonus += 1
                 self.hud.update_score(self.bonus)
 
