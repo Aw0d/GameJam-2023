@@ -1,5 +1,6 @@
 import pygame as pg
 from game import Game
+from menu.main_menu import MainMenu
 
 # Fonction principale : pas de varaibles globales
 def main():
@@ -24,10 +25,12 @@ def main():
     #   3: Menu settings
     #   4: Editeur de niveaux
     #   ...
-    state = 1
+    state = 0
 
-    # Création d'une instance du jeu
-    game = Game(screen)
+    # Variable contenant le menu principal
+    main_menu = None
+    # Variable contenant le jeu
+    game = None
 
     # Boucle de jeu
     previous_esc_state = False  # Variable pour garder en mémoire l'état précédent de la touche "échap"
@@ -54,8 +57,27 @@ def main():
 
 
         if state == 0: # Menu principal
-            pass
+            game = None
+            if main_menu == None:
+                main_menu = MainMenu(screen)
+
+            # Limite la vitesse à 6O images max par secondes
+            # Calcule le temps réel entre deux images en millisecondes
+            dt = clock.tick(60)
+
+            # Met à jour le jeu sachant que dt millisecondes se sont écoulées
+            menu_state = main_menu.update()
+            if menu_state:
+                state = menu_state
+
+            # Affiche le nouvel état de l'écran
+            pg.display.flip()
+
         elif state == 1: # Jeu
+            # Si le jeu n'est pas créé, on en crée un
+            if game == None:
+                game = Game(screen)
+
             state = game.isRunning()
 
             # Limite la vitesse à 6O images max par secondes

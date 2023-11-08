@@ -9,7 +9,7 @@ class Table(pg.sprite.Sprite):
         # Donne une couleur
         # self.image.fill("brown")
 
-        self.pos = pg.math.Vector2((x, y-40))
+        self.pos = pg.math.Vector2((x, y))
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
         self.rect.midbottom = self.pos
 

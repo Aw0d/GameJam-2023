@@ -1,38 +1,14 @@
 import pygame as pg
-
+from menu.menu_components import Button, Text
 
 GRIS = (211,211,211)
 
-
-class Text(pg.sprite.Sprite):
-    def __init__(self, x , y, image):
-        super().__init__()
-        #self.image = pg.Surface((100, 50))
-        self.image = pg.image.load(image)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-
-
-class Button(pg.sprite.Sprite):
-    def __init__(self, x , y, image, func):
-        super().__init__()
-        #self.image = pg.Surface((100, 50))
-        self.image = pg.image.load(image)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        #on enregistre l'Etat du button(True si il est clicked, FALSE sinon)
-        self.state = False
-        self.func = func
-        
-    
-
-class Menu_principale():
-
+class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
         titre_text = Text(512, 100, 'img/titre.jpeg')
-        start_button = Button(512, 300, 'img/menu_button.png', lambda:print("START"))
-        menu_button = Button(512, 425, 'img/menu_button.png',lambda:print("OPTIONS") )
+        start_button = Button(512, 300, 'img/menu_button.png', lambda: 1)               #   1: Jeu
+        menu_button = Button(512, 425, 'img/menu_button.png',lambda:print("OPTIONS"))
         inspect_button = Button(512, 550, 'img/menu_button.png',lambda:print("MODE INSPECTION"))
         exit_button = Button(512, 675, 'img/menu_button.png',lambda:print("EXIT"))
         
@@ -51,8 +27,7 @@ class Menu_principale():
 
         self.screen.blit(self.clear_background,(0,0))
     
-    
-    def run(self):
+    def update(self):
         self.clear_background = pg.Surface(self.screen.get_size())
         self.clear_background.fill((202,228,241))
         self.screen.blit(self.clear_background,(0,0))
@@ -63,16 +38,11 @@ class Menu_principale():
             if button.rect.collidepoint(pos):
                 if pg.mouse.get_pressed()[0] == 1 and button.state == False:
                     button.state = True
-                    button.func()
-                    print('Cliked')
+                    return button.func()
                     
             if pg.mouse.get_pressed()[0] == 0:
                 button.state = False
         
-
-
-
-            
 if __name__ == "__main__":
     pg.init()
     pg.font.init()
@@ -80,13 +50,13 @@ if __name__ == "__main__":
     screenSize = (1024,768)
     screen = pg.display.set_mode(screenSize)
     clock = pg.time.Clock()
-    menu = Menu_principale(screen)
+    menu = MainMenu(screen)
     
     running = True
     
     while running: 
         clock.tick(60)
-        menu.run()
+        menu.update()
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
