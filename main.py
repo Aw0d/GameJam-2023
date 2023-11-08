@@ -1,6 +1,7 @@
 import pygame as pg
 from game import Game
 from menu.main_menu import MainMenu
+from menu.credits_menu import CreditsMenu
 
 # Fonction principale : pas de varaibles globales
 def main():
@@ -23,13 +24,15 @@ def main():
     #   1: Jeu
     #   2: Menu settings
     #   3: Editeur de niveaux
-    #   ...
+    #   4: Crédits
     state = 0
 
     # Variable contenant le menu principal
-    main_menu = None
+    main_menu = MainMenu(screen)
     # Variable contenant le jeu
     game = None
+
+    credits_menu = CreditsMenu(screen)
 
     # Boucle de jeu
     running = True
@@ -42,16 +45,13 @@ def main():
                     # On ferme la fenêtre
                     running = False
 
+        # Limite la vitesse à 6O images max par secondes
+        # Calcule le temps réel entre deux images en millisecondes
+        dt = clock.tick(60)
 
         if state == 0: # Menu principal
             game = None
-            if main_menu == None:
-                main_menu = MainMenu(screen)
             main_menu.show()
-
-            # Limite la vitesse à 6O images max par secondes
-            # Calcule le temps réel entre deux images en millisecondes
-            dt = clock.tick(60)
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             menu_state = main_menu.update()
@@ -59,6 +59,8 @@ def main():
                 state = 1
             elif menu_state == "quit":
                 running = False
+            elif menu_state == "credits":
+                state = 4
 
             # Affiche le nouvel état de l'écran
             pg.display.flip()
@@ -74,10 +76,6 @@ def main():
             elif action == "retry":
                 game = Game(screen)
 
-            # Limite la vitesse à 6O images max par secondes
-            # Calcule le temps réel entre deux images en millisecondes
-            dt = clock.tick(60)
-
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             game.update(dt, events)
 
@@ -88,7 +86,14 @@ def main():
             pass
         elif state == 3: # Editeur de niveaux
             pass
+        elif state == 4: # Crédits
+            credits_menu.show()
 
+            action = credits_menu.update()
+            if action == "back":
+                state = 0
+
+            pg.display.flip()
     # Fin utilisation de pygame
     pg.quit()
 

@@ -1,8 +1,6 @@
 import pygame as pg
 from menu.menu_components import Button, Text, Image
 
-GRIS = (211,211,211)
-
 class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
@@ -13,8 +11,9 @@ class MainMenu():
         menu_button = Button((512, 425), "Settings", lambda:print("OPTIONS"))
         inspect_button = Button((512, 550), "Level Editor", lambda:print("MODE INSPECTION"))
         exit_button = Button((512, 675), "Exit", lambda: "quit", "red")
+        credits_button = Button((screen.get_width() - 216/2 - 15, screen.get_height() - 70/2 - 15), "Credits", lambda: "credits", "small_green")
         
-        self.list_buttons = [start_button, menu_button, exit_button, inspect_button]
+        self.list_buttons = [start_button, menu_button, exit_button, inspect_button, credits_button]
         
         self.all = pg.sprite.RenderUpdates()
 
@@ -23,10 +22,10 @@ class MainMenu():
         self.all.add(menu_button)
         self.all.add(inspect_button)
         self.all.add(exit_button)
+        self.all.add(credits_button)
 
         self.background = pg.Surface(self.screen.get_size())
         self.background.fill((202,228,241))
-        self.background.set_alpha(190)
     
     def update(self):
         # Détection des hovers et des clicks sur les boutons
