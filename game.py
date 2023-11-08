@@ -10,6 +10,7 @@ from components.book import Book
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
 from menu.lose_menu import LoseMenu
+from menu.win_menu import WinMenu
 
 class Game:
     def __init__(self, screen: pg.Surface):
@@ -25,6 +26,8 @@ class Game:
         self.hud = HUD(self.screen.get_size())
         # Création du menu pause
         self.menu_pause = PauseMenu(screen)
+        # Création du menu win
+        self.menu_win = WinMenu(screen)
         # Création du menu lose
         self.menu_lose = LoseMenu(screen)
 
@@ -73,6 +76,7 @@ class Game:
         self.isEnded = False
         self.isPaused = False
         self.isLosed = False
+        self.isWin = False
         self.retry = False
 
     def state(self):
@@ -111,6 +115,12 @@ class Game:
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
+        elif self.isWin:
+            action = self.menu_win.update()
+            if action == "retry":
+                self.retry = True
+            elif action == "menu":
+                self.isEnded = True
         else:
             # Collision entre le joueur et les autres objets
             hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
@@ -145,6 +155,8 @@ class Game:
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
                     self.hud.update_score(self.bonus)
+                elif isinstance(sprite, Arrive):
+                    self.isWin = True
 
             if self.isLosed:
                 self.menu_lose.show()
