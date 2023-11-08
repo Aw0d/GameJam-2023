@@ -54,7 +54,7 @@ def main():
             main_menu.show()
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
-            menu_state = main_menu.update()
+            menu_state = main_menu.update(events)
             if menu_state == "play":
                 state = 1
             elif menu_state == "quit":
@@ -89,7 +89,7 @@ def main():
         elif state == 4: # Crédits
             credits_menu.show()
 
-            action = credits_menu.update()
+            action = credits_menu.update(events)
             if action == "back":
                 state = 0
 
