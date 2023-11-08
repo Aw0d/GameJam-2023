@@ -5,7 +5,7 @@ class CreditsMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
 
-        logo = Image((384, 145), (512, 100), "images/logo.png")
+        logo = Image((500, 174), (512, 100), "images/logo.png")
 
         credits_text = Text("credits", (screen.get_width()/2, 350), 24, (0, 0, 0), None)
 
@@ -19,8 +19,7 @@ class CreditsMenu():
         self.all.add(credits_text)
         self.all.add(back_button)
 
-        self.background = pg.Surface(self.screen.get_size())
-        self.background.fill((202,228,241))
+        self.background = pg.image.load("images/menu/fond.png")
 
     def update(self):
         # Détection des hovers et des clicks sur les boutons
