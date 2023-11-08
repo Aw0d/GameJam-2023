@@ -127,7 +127,6 @@ class Game:
             self.player._update(dt, hits)
 
             # Test de la collision entre le Player et les autres elements
-            print(hits)
             for sprite in hits:
                 if isinstance(sprite, (Table)):
                     # Si on n'est pas au dessus ou en dessous
