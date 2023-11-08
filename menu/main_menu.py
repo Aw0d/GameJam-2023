@@ -6,7 +6,7 @@ GRIS = (211,211,211)
 class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
-        titre_text = Text(512, 100, 'img/titre.jpeg')
+        titre_text = Text("Loser POV Game", 512, 100, 100)
         start_button = Button(512, 300, 'img/menu_button.png', lambda: 1)               #   1: Jeu
         menu_button = Button(512, 425, 'img/menu_button.png',lambda:print("OPTIONS"))
         inspect_button = Button(512, 550, 'img/menu_button.png',lambda:print("MODE INSPECTION"))
