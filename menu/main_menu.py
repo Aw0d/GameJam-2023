@@ -1,5 +1,5 @@
 import pygame as pg
-from menu.menu_components import Button, Text
+from menu.menu_components import Button, Text, Image
 
 GRIS = (211,211,211)
 
@@ -7,7 +7,7 @@ class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
 
-        titre_text = Text("UniversityRush", (512, 100), 100)
+        logo = Image((384, 145), (512, 100), "images/logo.png")
 
         start_button = Button((512, 300), "Play", lambda: "play")
         menu_button = Button((512, 425), "Settings", lambda:print("OPTIONS"))
@@ -18,7 +18,7 @@ class MainMenu():
         
         self.all = pg.sprite.RenderUpdates()
 
-        self.all.add(titre_text)
+        self.all.add(logo)
         self.all.add(start_button)
         self.all.add(menu_button)
         self.all.add(inspect_button)
@@ -26,6 +26,7 @@ class MainMenu():
 
         self.background = pg.Surface(self.screen.get_size())
         self.background.fill((202,228,241))
+        self.background.set_alpha(190)
     
     def update(self):
         # Détection des hovers et des clicks sur les boutons

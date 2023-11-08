@@ -7,7 +7,7 @@ class LoseMenu():
 
         size = (500, 600)
 
-        lose_text = Text("Perdu !", (screen.get_width()/2, 150), 56, (0, 0, 0))
+        lose_text = Text("You lose!", (screen.get_width()/2, 150), 36, (0, 0, 0))
 
         retry_button = Button((screen.get_width()/2, 325), "Retry", lambda:"retry")
         menu_button = Button((screen.get_width()/2, 450), "Menu", lambda:"menu", "red")
@@ -21,7 +21,8 @@ class LoseMenu():
         self.all.add(menu_button)
 
         self.background = pg.Surface(size)
-        self.background.fill("white")
+        self.background.fill((68,114,179))
+        self.background.set_alpha(190)
 
     def update(self):
         pos = pg.mouse.get_pos()

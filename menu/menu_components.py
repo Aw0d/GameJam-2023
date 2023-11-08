@@ -37,7 +37,7 @@ class Button(pg.sprite.Sprite):
             self.image = self.images[0]
 
 class Text(pg.sprite.Sprite):
-    def __init__(self, text, pos, font_size=36, color=(255, 255, 255), font_name=None):
+    def __init__(self, text, pos, font_size=24, color=(255, 255, 255), font_name="fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf"):
         super().__init__()
 
         self.text = text
@@ -45,14 +45,27 @@ class Text(pg.sprite.Sprite):
         self.color = color
         self.font_size = font_size
         self.font_name = font_name
-        self.font = pg.font.Font(font_name, font_size) if font_name else pg.font.Font(None, font_size)
+        self.font = pg.font.Font(font_name, font_size)
         self.image = self.render_text()
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
 
     def render_text(self):
-        return self.font.render(self.text, True, self.color)
+        return self.font.render(self.text, False, self.color)
 
     def update_text(self, text):
         self.text = text
         self.image = self.render_text()
+
+class Image(pg.sprite.Sprite):
+    def __init__(self, size, pos, image):
+        super().__init__()
+
+        self.image = pg.image.load(image)
+        self.image = pg.transform.smoothscale(self.image, size)
+
+        self.rect = self.image.get_rect()
+
+        self.pos = pg.math.Vector2(pos)
+
+        self.rect.center = self.pos

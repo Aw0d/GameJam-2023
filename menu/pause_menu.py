@@ -7,7 +7,7 @@ class PauseMenu():
 
         size = (500, 600)
 
-        pause_text = Text("Jeu en pause !", (screen.get_width()/2, 150), 56, (0, 0, 0))
+        pause_text = Text("Game paused!", (screen.get_width()/2, 150), 36, (0, 0, 0))
 
         continue_button = Button((screen.get_width()/2, 300), "Continue", lambda:"continue")
         retry_button = Button((screen.get_width()/2, 425), "Retry", lambda:"retry")
@@ -23,7 +23,8 @@ class PauseMenu():
         self.all.add(menu_button)
 
         self.background = pg.Surface(size)
-        self.background.fill("white")
+        self.background.fill((68,114,179))
+        self.background.set_alpha(190)
 
     def update(self):
         pos = pg.mouse.get_pos()
