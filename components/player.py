@@ -30,8 +30,7 @@ class Player(pg.sprite.Sprite):
         self.slide_timer = 0  # Initialisation du compteur de glissade
         self.move_frame = 0
 
-        self.running_channel = pg.mixer.Sound.play(Player.running_sound, -1)
-        self.running_channel.pause()
+        self.channel = pg.mixer.Channel(1)     
 
     def _update(self,dt, hits):
         if self.sliding:
@@ -56,8 +55,8 @@ class Player(pg.sprite.Sprite):
                 self.move_frame = 1
             self.rect = self.image.get_rect()
 
-        if not self.jumping and not self.sliding:
-            self.running_channel.unpause()
+        if self.channel.get_sound() != Player.running_sound and not self.jumping and not self.sliding:
+            self.channel.play(Player.running_sound , -1)
 
         self.move(dt, hits)
 
@@ -91,15 +90,13 @@ class Player(pg.sprite.Sprite):
     def jump(self, hits):
         # If touching the ground, and not currently jumping, cause the player to jump.
         if hits and not self.jumping:
-            self.running_channel.pause()
-            pg.mixer.Sound.play(Player.jump_sound)
+            self.channel.play(Player.jump_sound)
             self.jumping = True
             self.move_frame = 0
             self.vel_y = -0.85
     
     def slide(self):
         if not self.sliding:
-            self.running_channel.pause()
-            pg.mixer.Sound.play(Player.slide_sound)
+            self.channel.play(Player.slide_sound)
             self.sliding = True
             self.move_frame = 0

@@ -90,6 +90,7 @@ class Game:
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
+        print("Channel: ", self.player.channel)
         for event in events:
             # Si on ferme la fenêtre, on arrête la boucle
             match event.type:
