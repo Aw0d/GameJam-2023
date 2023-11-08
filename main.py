@@ -42,16 +42,15 @@ def main():
                     # On ferme la fenêtre
                     running = False
 
+        # Limite la vitesse à 6O images max par secondes
+        # Calcule le temps réel entre deux images en millisecondes
+        dt = clock.tick(60)
 
         if state == 0: # Menu principal
             game = None
             if main_menu == None:
                 main_menu = MainMenu(screen)
             main_menu.show()
-
-            # Limite la vitesse à 6O images max par secondes
-            # Calcule le temps réel entre deux images en millisecondes
-            dt = clock.tick(60)
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             menu_state = main_menu.update()
@@ -73,10 +72,6 @@ def main():
                 state = 0
             elif action == "retry":
                 game = Game(screen)
-
-            # Limite la vitesse à 6O images max par secondes
-            # Calcule le temps réel entre deux images en millisecondes
-            dt = clock.tick(60)
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             game.update(dt, events)
