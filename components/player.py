@@ -75,7 +75,7 @@ class Player(pg.sprite.Sprite):
         if i < len(hits) :
 
             lowest = hits[i]
-            if self.rect.bottom > lowest.rect.top - 1 and self.rect.bottom < lowest.rect.bottom:
+            if self.rect.bottom > lowest.rect.top - 2 and self.rect.bottom < lowest.rect.bottom:
                 self.pos.y = lowest.rect.top + 1
                 self.vel_y = 0
                 self.jumping = False

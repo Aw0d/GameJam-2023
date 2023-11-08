@@ -114,7 +114,6 @@ class Game:
         else:
             # Collision entre le joueur et les autres objets
             hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
-            print(hits)
 
             # Récupération des touches appuyées
             pressed_keys = pg.key.get_pressed()
