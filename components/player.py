@@ -31,6 +31,7 @@ class Player(pg.sprite.Sprite):
         self.move_frame = 0
 
         self.running_channel = pg.mixer.Sound.play(Player.running_sound, -1)
+        self.running_channel.pause()
 
     def _update(self,dt, hits):
         if self.sliding:
@@ -40,7 +41,6 @@ class Player(pg.sprite.Sprite):
                 # Rétablir la hauteur normale du personnage
                 self.sliding = False
                 self.slide_timer = 0
-                self.running_channel.unpause()
 
         self.frame += 1
 
@@ -55,6 +55,9 @@ class Player(pg.sprite.Sprite):
                 self.image = Player.slide_ani[self.move_frame]
                 self.move_frame = 1
             self.rect = self.image.get_rect()
+
+        if not self.jumping and not self.sliding:
+            self.running_channel.unpause()
 
         self.move(dt, hits)
 
@@ -81,9 +84,8 @@ class Player(pg.sprite.Sprite):
             if self.rect.bottom > lowest.rect.top - 2 and self.rect.bottom < lowest.rect.bottom:
                 self.pos.y = lowest.rect.top + 1
                 self.vel_y = 0
-                if self.jumping == True:
-                    self.jumping = False
-                    self.running_channel.unpause()
+                self.jumping = False
+
 
 
     def jump(self, hits):

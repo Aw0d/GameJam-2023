@@ -101,6 +101,9 @@ class Game:
                             else:
                                 self.isPaused = not self.isPaused
 
+        if self.isWin or self.isLosed or self.isPaused or self.isEnded:
+                pg.mixer.pause()
+
         if self.isPaused:
             self.menu_pause.show()
             action = self.menu_pause.update()
@@ -170,3 +173,4 @@ class Game:
                 self.hud.draw(self.screen)
                 # Remplace le background des zones modifiées par le mouvement des sprites
                 pg.display.update(dirty)
+            
