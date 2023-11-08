@@ -1,7 +1,5 @@
 import pygame as pg
 
-vec = pg.math.Vector2
-
 class Player(pg.sprite.Sprite):
     run_ani = [pg.image.load("images/characters/player/run1.png"), pg.image.load("images/characters/player/run2.png"),
                 pg.image.load("images/characters/player/run3.png"), pg.image.load("images/characters/player/run4.png"),
@@ -10,6 +8,11 @@ class Player(pg.sprite.Sprite):
     jump_ani = [pg.image.load("images/characters/player/saut1.png"), pg.image.load("images/characters/player/saut2.png")]
 
     slide_ani = [pg.image.load("images/characters/player/slide1.png"), pg.image.load("images/characters/player/slide2.png")]
+
+    pg.mixer.init()
+    jump_sound = pg.mixer.Sound("sounds/jump.mp3")
+    slide_sound = pg.mixer.Sound("sounds/slide.mp3")
+    #running_sound = pg.mixer.Sound("sounds/running.mp3")
 
     def __init__(self):
         super().__init__()
@@ -20,7 +23,7 @@ class Player(pg.sprite.Sprite):
 
 
         # Position
-        self.pos = vec((200, 200))
+        self.pos = pg.math.Vector2((200, 200))
         self.vel_y = 0
         self.acc_y = 0.06
 
@@ -79,21 +82,18 @@ class Player(pg.sprite.Sprite):
                 self.pos.y = lowest.rect.top + 1
                 self.vel_y = 0
                 self.jumping = False
-                pg.mixer.music.load("sounds/running.mp3")
-                pg.mixer.music.play(1)
+
 
     def jump(self, hits):
         # If touching the ground, and not currently jumping, cause the player to jump.
         if hits and not self.jumping:
-            jump_sound = pg.mixer.Sound("sounds/jump.mp3")
-            pg.mixer.Sound.play(jump_sound)
+            pg.mixer.Sound.play(Player.jump_sound)
             self.jumping = True
             self.move_frame = 0
             self.vel_y = -0.85
     
     def slide(self):
         if not self.sliding:
-            pg.mixer.music.load("sounds/slide.mp3")
-            pg.mixer.music.play(1)
+            pg.mixer.Sound.play(Player.slide_sound)
             self.sliding = True
             self.move_frame = 0
