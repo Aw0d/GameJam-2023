@@ -55,8 +55,10 @@ def main():
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             menu_state = main_menu.update()
-            if menu_state:
-                state = menu_state
+            if menu_state == "play":
+                state = 1
+            elif menu_state == "quit":
+                running = False
 
             # Affiche le nouvel état de l'écran
             pg.display.flip()

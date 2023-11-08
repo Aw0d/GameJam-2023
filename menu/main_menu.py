@@ -9,10 +9,10 @@ class MainMenu():
 
         titre_text = Text("Loser POV Game", (512, 100), 100)
 
-        start_button = Button((512, 300), 'img/menu_button.png', lambda: 1)               #   1: Jeu
+        start_button = Button((512, 300), 'img/menu_button.png', lambda: "play")
         menu_button = Button((512, 425), 'img/menu_button.png',lambda:print("OPTIONS"))
         inspect_button = Button((512, 550), 'img/menu_button.png',lambda:print("MODE INSPECTION"))
-        exit_button = Button((512, 675), 'img/menu_button.png',lambda:print("EXIT"))
+        exit_button = Button((512, 675), 'img/menu_button.png',lambda: "quit")
         
         self.list_buttons = [start_button, menu_button, exit_button, inspect_button]
         
