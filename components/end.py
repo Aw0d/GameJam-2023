@@ -2,7 +2,7 @@ import pygame as pg
 
 
 
-class FinJeu(pg.sprite.Sprite):
+class EndGame(pg.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 

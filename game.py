@@ -6,7 +6,7 @@ from components.spike import Spike
 from components.table import Table
 from components.chair import Chair
 from components.book import Book
-from components.fin import FinJeu
+from components.end import EndGame
 
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
@@ -64,7 +64,7 @@ class Game:
         self.all.add(Spike(3260, self.ground.rect.top))
         self.all.add(Spike(3290, self.ground.rect.top))
         self.all.add(Ground((50, 90), (3320, self.ground.rect.top)))
-        self.all.add(FinJeu(8800, self.ground.rect.top))
+        self.all.add(EndGame(8800, self.ground.rect.top))
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
             if type(sprite).__name__ not in ["Background", "Player"]:
@@ -156,11 +156,13 @@ class Game:
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
                     self.hud.update_score(self.bonus)
-                elif isinstance(sprite, Arrive):
+                elif isinstance(sprite, EndGame):
                     self.isWin = True
 
             if self.isLosed:
                 self.menu_lose.show()
+            elif self.isWin:
+                self.menu_win.show(self.bonus)
             else:
                 # Vide l'écran en replacant le background
                 self.all.clear(self.screen, self.clear_background)

@@ -7,8 +7,8 @@ class WinMenu():
 
         size = (500, 600)
 
-        win_text = Text("Bravo, vous êtes arrivé au bout !", (screen.get_width()/2, 150), 56, (0, 0, 0))
-        self.score_text = Text("Votre score est de XXX.", (screen.get_width()/2, 220), 56, (0, 0, 0))
+        win_text = Text("Bravo, vous êtes arrivé au bout !", (screen.get_width()/2, 150), 42, (0, 0, 0))
+        self.score_text = Text("Votre score est de XXX.", (screen.get_width()/2, 220), 36, (0, 0, 0))
 
         retry_button = Button((screen.get_width()/2, 325), 'images/menu/retry_button.png', lambda:"retry")
         menu_button = Button((screen.get_width()/2, 450), 'images/menu/menu_button.png', lambda:"menu")
@@ -18,6 +18,7 @@ class WinMenu():
         self.all = pg.sprite.RenderUpdates()
 
         self.all.add(win_text)
+        self.all.add(self.score_text)
         self.all.add(retry_button)
         self.all.add(menu_button)
 
