@@ -6,6 +6,7 @@ from components.spike import Spike
 from components.table import Table
 from components.chair import Chair
 from components.book import Book
+from components.fin import FinJeu
 
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
@@ -60,7 +61,7 @@ class Game:
         self.all.add(Spike(3260, self.ground.rect.top))
         self.all.add(Spike(3290, self.ground.rect.top))
         self.all.add(Ground((50, 90), (3320, self.ground.rect.top)))
-
+        self.all.add(FinJeu(8800, self.ground.rect.top))
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
             if type(sprite).__name__ not in ["Background", "Player"]:
