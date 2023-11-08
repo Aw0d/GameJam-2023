@@ -6,33 +6,29 @@ GRIS = (211,211,211)
 class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
+
         titre_text = Text("Loser POV Game", (512, 100), 100)
-        start_button = Button(512, 300, 'img/menu_button.png', lambda: 1)               #   1: Jeu
-        menu_button = Button(512, 425, 'img/menu_button.png',lambda:print("OPTIONS"))
-        inspect_button = Button(512, 550, 'img/menu_button.png',lambda:print("MODE INSPECTION"))
-        exit_button = Button(512, 675, 'img/menu_button.png',lambda:print("EXIT"))
+
+        start_button = Button((512, 300), 'img/menu_button.png', lambda: 1)               #   1: Jeu
+        menu_button = Button((512, 425), 'img/menu_button.png',lambda:print("OPTIONS"))
+        inspect_button = Button((512, 550), 'img/menu_button.png',lambda:print("MODE INSPECTION"))
+        exit_button = Button((512, 675), 'img/menu_button.png',lambda:print("EXIT"))
         
         self.list_buttons = [start_button, menu_button, exit_button, inspect_button]
         
-        self.buttons = pg.sprite.RenderUpdates()
+        self.all = pg.sprite.RenderUpdates()
 
-        self.buttons.add(titre_text)
-        self.buttons.add(start_button)
-        self.buttons.add(menu_button)
-        self.buttons.add(inspect_button)
-        self.buttons.add(exit_button)
+        self.all.add(titre_text)
+        self.all.add(start_button)
+        self.all.add(menu_button)
+        self.all.add(inspect_button)
+        self.all.add(exit_button)
 
-        self.clear_background = pg.Surface(self.screen.get_size())
-        self.clear_background.fill((202,228,241))
-
-        self.screen.blit(self.clear_background,(0,0))
+        self.background = pg.Surface(self.screen.get_size())
+        self.background.fill((202,228,241))
     
     def update(self):
-        self.clear_background = pg.Surface(self.screen.get_size())
-        self.clear_background.fill((202,228,241))
-        self.screen.blit(self.clear_background,(0,0))
-        dirty = self.buttons.draw(self.screen)
-        pg.display.update(dirty)
+        # Détection des hovers et des clicks sur les boutons
         pos = pg.mouse.get_pos()
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
@@ -42,6 +38,12 @@ class MainMenu():
                     
             if pg.mouse.get_pressed()[0] == 0:
                 button.state = False
+    
+    def show(self):
+        self.screen.blit(self.background,(0,0))
+
+        dirty = self.all.draw(self.screen)
+        pg.display.update(dirty)
         
 if __name__ == "__main__":
     pg.init()

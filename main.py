@@ -47,6 +47,7 @@ def main():
             game = None
             if main_menu == None:
                 main_menu = MainMenu(screen)
+            main_menu.show()
 
             # Limite la vitesse à 6O images max par secondes
             # Calcule le temps réel entre deux images en millisecondes
@@ -65,7 +66,11 @@ def main():
             if game == None:
                 game = Game(screen)
 
-            state = game.isRunning()
+            action = game.state()
+            if action == "end":
+                state = 0
+            elif action == "retry":
+                game = Game(screen)
 
             # Limite la vitesse à 6O images max par secondes
             # Calcule le temps réel entre deux images en millisecondes

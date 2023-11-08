@@ -8,6 +8,7 @@ from components.chair import Chair
 from components.book import Book
 
 from menu.hud import HUD
+from menu.pause_menu import PauseMenu
 
 class Game:
     def __init__(self, screen: pg.Surface):
@@ -21,6 +22,8 @@ class Game:
 
         # Création du HUD
         self.hud = HUD(self.screen.get_size())
+        # Création du menu pause
+        self.menu_pause = PauseMenu(screen)
 
         # Crée une surface pour le fond du jeu de même taille que la fenêtre pour effacer le contenu affiché
         self.clear_background = pg.Surface(self.screen.get_size())
@@ -65,13 +68,13 @@ class Game:
         # Vrai si le jeu est fini
         self.isEnded = False
         self.isPaused = False
+        self.retry = False
 
-        #self.previous_esc_state = False  # Variable pour garder en mémoire l'état précédent de la touche "échap"
-
-    def isRunning(self):
+    def state(self):
         if self.isEnded:
-            return 0 # Menu Principal
-        return 1
+            return "end" # Menu Principal
+        if self.retry:
+            return "retry"
     
     def update(self, dt : int, events):
         """
@@ -82,10 +85,20 @@ class Game:
             match event.type:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
-                        self.isPaused = not self.isPaused
+                        if self.isPaused:
+                            self.isPaused = not self.isPaused
+                        else:
+                            self.isPaused = not self.isPaused
+                            self.menu_pause.show()
 
         if self.isPaused:
-            pass
+            action = self.menu_pause.update()
+            if action == "continue":
+                self.isPaused = not self.isPaused
+            elif action == "retry":
+                self.retry = True
+            elif action == "menu":
+                self.isEnded = True
         else:
             # Collision entre le joueur et les autres objets
             hits = pg.sprite.spritecollide(self.player, self.objects_with_hitbox, False)
