@@ -58,7 +58,7 @@ class Player(pg.sprite.Sprite):
     def move(self,dt, hits):
         # Application de la gravité
         self.vel_y += self.acc_y
-        vel_max = 20
+        vel_max = 15
         self.pos.y += min(self.vel_y * dt, vel_max) # Updates Position with new values
             
         # Vérification de la colision avec le sol
