@@ -81,6 +81,7 @@ class Game:
     def load_level(self, level : Level):        
         for _ in level.all:
             object, info = _
+            print(info)
             match object:
                 case "Chair":
                     self.all.add(Chair(info))

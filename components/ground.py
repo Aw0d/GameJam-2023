@@ -20,6 +20,10 @@ class Ground(pg.sprite.Sprite):
             for y in range(0, self.size[1], self.tile_size[1]):
                 self.image.blit(self.tile_image, (x, y))
 
+
+    def setPos(self, pos):
+        self.pos = pg.math.Vector2(pos)
+
     def update(self, dt, speed):
         self.pos.x = self.pos.x - speed * dt
         self.rect.bottomleft = self.pos

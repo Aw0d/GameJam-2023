@@ -109,12 +109,12 @@ class GameEditor:
         if self.menu_contents.getSelection() == 9:
             name = "test"
             level = Level(name)
-            print("oui oui")
+            correction = -self.ground.rect.left
             for element in self.all.spritedict:
                 if isinstance(element, Ground):
-                    level.all.append([element.__class__.__name__, [element.pos, element.size]])
+                    level.all.append([element.__class__.__name__, [(element.rect.left + correction, element.rect.bottom), element.size]])
                 else:
-                    level.all.append([element.__class__.__name__, element.pos])
+                    level.all.append([element.__class__.__name__, (element.rect.centerx + correction ,element.rect.bottom)])
             
             with open(f"levels/{name}", "wb") as f1:
                 pickle.dump(level, f1)
