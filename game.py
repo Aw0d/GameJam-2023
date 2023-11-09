@@ -76,7 +76,8 @@ class Game:
         self.all.add(Ground((50, 150), (3320, self.ground.rect.top)))
         self.all.add(Bonus((3320, self.ground.rect.top - 160)))
 
-        self.all.add(EndGame(8800, self.ground.rect.top))
+        self.endGame = EndGame(3800, self.ground.rect.top)
+        self.all.add(self.endGame)
         
         # On sépare les objets sans hitboxe des objets avec hitboxe
         self.objects_with_hitbox = pg.sprite.Group()
@@ -93,6 +94,8 @@ class Game:
         self.isLosed = False
         self.isWin = False
         self.retry = False
+
+        self.current_end_pause_time = 0
 
     def state(self):
         if self.isEnded:
@@ -132,7 +135,7 @@ class Game:
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
-        elif self.isWin:
+        elif self.endGame.isEnded:
             self.menu_win.show(self.bonus)
             action = self.menu_win.update(events)
             if action == "retry":
@@ -185,7 +188,18 @@ class Game:
                 elif isinstance(sprite, EndGame):
                     self.isWin = True
 
-            if not self.isLosed and not self.isWin:
+            if not self.isLosed and not self.endGame.isEnded:
+                if self.isWin:
+                    self.all.remove(self.player)
+                    self.speed = 0
+
+                    self.endGame.player_ended()
+
+                    pause_time = 500
+                    self.current_end_pause_time += dt 
+                    if self.current_end_pause_time > pause_time:
+                        self.endGame.isEnded = True
+
                 # Vide l'écran en replacant le background
                 self.all.clear(self.screen, self.clear_background)
                 # Dessine tous les sprites dans la surface de l'écran
@@ -195,4 +209,3 @@ class Game:
                 self.hud.draw(self.screen)
                 # Remplace le background des zones modifiées par le mouvement des sprites
                 pg.display.update(dirty)
-            
