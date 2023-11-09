@@ -42,7 +42,6 @@ class Button(pg.sprite.Sprite):
             self.isHover = True
             self.image = self.images[1]
             if not Button.channel.get_busy():
-                print("btn hover")
                 Button.channel.play(Button.btn_hover_sound)
         elif not isHover:
             self.isHover = False
