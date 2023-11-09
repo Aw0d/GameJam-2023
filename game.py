@@ -180,6 +180,7 @@ class Game:
                 # Dessine tous les sprites dans la surface de l'écran
                 self.background.draw(self.screen)
                 dirty = self.all.draw(self.screen)
+                self.player.particles.draw(self.screen)
                 self.hud.draw(self.screen)
                 # Remplace le background des zones modifiées par le mouvement des sprites
                 pg.display.update(dirty)

@@ -17,7 +17,7 @@ class Background(pg.sprite.Sprite):
         self.rect.topleft = self.pos
  
     def update(self, dt, speed):
-        self.pos.x = self.pos.x - speed * dt
+        self.pos.x = self.pos.x - speed*0.9 * dt
         if self.pos.x < -self.image.get_width():
             self.pos.x = 0
             self.image = self.image2

@@ -2,6 +2,7 @@ import pygame as pg
 from components.bonus import Bonus
 from components.malus import Malus
 from components.spike import Spike
+from components.particle import Particle
 
 
 class Player(pg.sprite.Sprite):
@@ -36,6 +37,8 @@ class Player(pg.sprite.Sprite):
         self.channel = pg.mixer.Channel(0)
         self.channel.play(Player.running_sound , -1)
 
+        self.particles = pg.sprite.RenderUpdates()
+
     def _update(self,dt, hits):
         if self.sliding:
             # Compteur pour la durée de la glissade
@@ -61,6 +64,18 @@ class Player(pg.sprite.Sprite):
 
         if self.channel.get_sound() != Player.running_sound and not self.jumping and not self.sliding:
             self.channel.play(Player.running_sound , -1)
+
+        if not self.jumping and not self.sliding:
+            for _ in range(2):
+                self.particles.add(Particle((self.rect.right - 5, self.rect.bottom)))
+        elif not self.jumping:
+            for _ in range(5):
+                self.particles.add(Particle((self.rect.right - 5, self.rect.bottom)))
+
+        # Mise à jour et dessin des particules
+        self.particles.update()
+
+        self.particles.remove([particle for particle in self.particles if particle.lifespan <= 0])
 
         self.move(dt, hits)
 
