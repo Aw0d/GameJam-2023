@@ -2,6 +2,7 @@ import pygame as pg
 import pickle
 pg.mixer.init()
 from game import Game
+from levelCreator import LevelCreator
 from menu.main_menu import MainMenu
 from menu.choose_level_menu import ChooseLevelMenu
 from menu.credits_menu import CreditsMenu
@@ -35,7 +36,7 @@ def main():
     main_menu = MainMenu(screen)
 
     # Variable contenant le menu de choix de niveau
-    choose_level_menu = ChooseLevelMenu(screen)
+    choose_level_menu = None
     
     #variable contenant le menu des settings
     settings = Settings(screen)
@@ -47,6 +48,9 @@ def main():
     # Variable contenant le jeu
     game = None
     current_level = None
+
+    # Game Editor
+    level_creator = None
 
     credits_menu = CreditsMenu(screen)
 
@@ -66,6 +70,7 @@ def main():
         dt = clock.tick(60)
 
         if state == 0: # Menu principal
+            level_creator = None
             game = None
             main_menu.show()
 
@@ -75,6 +80,8 @@ def main():
                 state = 5
             elif menu_state == "settings":
                 state = 2
+            elif menu_state == "level_creator":
+                state = 3
             elif menu_state == "quit":
                 running = False
             elif menu_state == "credits":
@@ -120,7 +127,17 @@ def main():
                 
             pg.display.flip()
         elif state == 3: # Editeur de niveaux
-            pass
+            if not level_creator:
+                level_creator = LevelCreator(screen)
+
+            action = level_creator.state()
+            if action == "end":
+                state = 0
+
+            level_creator.update(dt, events)
+
+            # Affiche le nouvel état de l'écran
+            pg.display.flip()
         elif state == 4: # Crédits
             credits_menu.show()
 
@@ -130,6 +147,8 @@ def main():
 
             pg.display.flip()
         elif state == 5: # Menu de choix de niveau
+            if not choose_level_menu:
+                choose_level_menu = ChooseLevelMenu(screen)
             choose_level_menu.show()
 
             action = choose_level_menu.update(events)
@@ -138,6 +157,7 @@ def main():
             elif action != None:
                 with open("levels/" + action, 'rb') as fichier:
                     current_level = pickle.load(fichier)
+                choose_level_menu = None
                 game = Game(screen, current_level)
                 state = 1
 

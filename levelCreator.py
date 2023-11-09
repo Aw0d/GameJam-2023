@@ -12,9 +12,10 @@ from menu.pause_menu import PauseMenu
 from menu.menu_contents import MenuContents
 import pickle
 from components.level import Level
+from menu.menu_components import TextBox, Text
         
 
-class GameEditor:
+class LevelCreator:
     def __init__(self, screen: pg.Surface):
         pg.init()
         self.screen = screen
@@ -45,29 +46,34 @@ class GameEditor:
 
         #Ajout du background et du ground à la liste des sprites 
         self.all.add(self.ground)
-        
+
+        self.name = None
+        self.textBox = TextBox((screen.get_width()/2, screen.get_height()/2), 600, 100)
+        self.textBoxRU = pg.sprite.RenderUpdates()
+        self.textBoxRU.add(self.textBox)
+        self.textBoxRU.add(Text("Choose a level name:", (screen.get_width()/2, screen.get_height()/2 - 100), 36, (68,114,179)))
 
         self.isEnded = False
         self.isPaused = False
-        self.isLosed = False
-        self.isWin = False
-        self.retry = False
 
         self.click1 = None
         self.click2 = None
+
+    def state(self):
+        if self.isEnded:
+            return "end"
 
 
     def update(self, dt : int, events):
         """
         Met à jour l'état du jeux en fonction du temps dt écoulé 
         """
-
         for event in events:
             # Si on ferme la fenêtre, on arrête la boucle
             match event.type:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
-                        if not self.isLosed:
+                        if not self.textBox.active:
                             if self.isPaused:
                                 self.isPaused = not self.isPaused
                             else:
@@ -103,42 +109,33 @@ class GameEditor:
                                     if sprite.rect.collidepoint(posMouse):
                                         self.all.remove(sprite)
                         
-        self.menu_contents.update(events)
+        print(self.textBox.active)
         if self.menu_contents.getSelection() == 9:
-            name = "test"
-            level = Level(name)
-            print("oui oui")
-            for element in self.all.spritedict:
-                if isinstance(element, Ground):
-                    level.all.append([element.__class__.__name__, [element.pos, element.size]])
-                else:
-                    level.all.append([element.__class__.__name__, element.pos])
-            
-            with open(f"levels/{name}", "wb") as f1:
-                pickle.dump(level, f1)
-            f1.close()
-            self.isEnded = True
+            self.textBox.active = True
+            if self.name == False:
+                self.textBox.active = False
+                self.menu_contents.setSelection(1)
+            elif self.name == None:
+                self.name = self.textBox.handle_event(events)
+            else:
+                level = Level(self.name)
+                for element in self.all.spritedict:
+                    if isinstance(element, Ground):
+                        level.all.append([element.__class__.__name__, [element.pos, element.size]])
+                    else:
+                        level.all.append([element.__class__.__name__, element.pos])
+                
+                with open(f"levels/{self.name}", "wb") as f1:
+                    pickle.dump(level, f1)
+                f1.close()
+                self.isEnded = True
 
         if self.isPaused:
             self.menu_pause.show()
-            action = self.menu_pause.update()
+            action = self.menu_pause.update(events)
             if action == "continue":
                 self.isPaused = False
             elif action == "retry":
-                self.retry = True
-            elif action == "menu":
-                self.isEnded = True
-        elif self.isLosed:
-            self.menu_lose.show()
-            action = self.menu_lose.update()
-            if action == "retry":
-                self.retry = True
-            elif action == "menu":
-                self.isEnded = True
-        elif self.isWin:
-            self.menu_win.show(self.bonus)
-            action = self.menu_win.update()
-            if action == "retry":
                 self.retry = True
             elif action == "menu":
                 self.isEnded = True
@@ -154,7 +151,12 @@ class GameEditor:
             # Dessine tous les sprites dans la surface de l'écran
             self.screen.blit(self.clear_background,(0,0))
             dirty = self.all.draw(self.screen)
-            self.menu_contents.draw(self.screen)
+            if self.textBox.active:
+                self.textBoxRU.draw(self.screen)
+                self.textBoxRU.update(self.screen)
+            else:
+                self.menu_contents.update(events)
+                self.menu_contents.draw(self.screen)
             # Remplace le background des zones modifiées par le mouvement des sprites
             pg.display.update(dirty)
             
