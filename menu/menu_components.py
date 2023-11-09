@@ -47,6 +47,12 @@ class Button(pg.sprite.Sprite):
             self.isHover = False
             self.image = self.images[0]
 
+    def change_color(self, color = "green"):
+        if color == "red":
+            self.images = Button.btn_image_red
+        else:
+            self.images = Button.btn_image_green
+
     def clicked(self):
         Button.channel.play(Button.btn_clicked_sound)
         self.isHover = False
