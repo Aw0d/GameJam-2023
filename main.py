@@ -2,6 +2,7 @@ import pygame as pg
 pg.mixer.init()
 from game import Game
 from menu.main_menu import MainMenu
+from menu.choose_level_menu import ChooseLevelMenu
 from menu.credits_menu import CreditsMenu
 from menu.settings_menu import Settings
 
@@ -31,6 +32,9 @@ def main():
 
     # Variable contenant le menu principal
     main_menu = MainMenu(screen)
+
+    # Variable contenant le menu de choix de niveau
+    choose_level_menu = ChooseLevelMenu(screen)
     
     #variable contenant le menu des settings
     settings = Settings(screen)
@@ -66,7 +70,7 @@ def main():
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             menu_state = main_menu.update(events)
             if menu_state == "play":
-                state = 1
+                state = 5
             elif menu_state == "settings":
                 state = 2
             elif menu_state == "quit":
@@ -122,6 +126,14 @@ def main():
             credits_menu.show()
 
             action = credits_menu.update(events)
+            if action == "back":
+                state = 0
+
+            pg.display.flip()
+        elif state == 5: # Menu de choix de niveau
+            choose_level_menu.show()
+
+            action = choose_level_menu.update(events)
             if action == "back":
                 state = 0
 
