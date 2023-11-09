@@ -13,7 +13,6 @@ class Level:
         #   "Ground": [(100, 10), (50, 50)]
         # }
         self.all = {}
-        self.endGame = None
 
     def setName(self, name):
         self.name  = name
