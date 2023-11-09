@@ -41,6 +41,7 @@ class Player(pg.sprite.Sprite):
         self.particles = pg.sprite.RenderUpdates()
 
     def _update(self,dt, hits):
+        # Contrôle de la durée de la glissade
         if self.sliding:
             # Compteur pour la durée de la glissade
             self.slide_timer += dt
@@ -49,8 +50,8 @@ class Player(pg.sprite.Sprite):
                 self.sliding = False
                 self.slide_timer = 0
 
+        # Mise à jour de l'animation
         self.frame += 1
-
         if self.frame % 5 == 0:
             if not self.jumping and not self.sliding:
                 self.image = Player.run_ani[self.move_frame]
@@ -63,19 +64,21 @@ class Player(pg.sprite.Sprite):
                 self.move_frame = 1
             self.rect = self.image.get_rect()
 
+        # Son de course
         if self.channel.get_sound() != Player.running_sound and not self.jumping and not self.sliding:
             self.channel.play(Player.running_sound , -1)
 
+        # Création des particules
         if not self.jumping and not self.sliding:
             for _ in range(2):
-                self.particles.add(Particle((self.rect.right - 5, self.rect.bottom)))
+                self.particles.add(Particle((self.pos.x + self.rect.width/2 - 5, self.pos.y)))
         elif not self.jumping:
             for _ in range(5):
-                self.particles.add(Particle((self.rect.right - 5, self.rect.bottom)))
+                self.particles.add(Particle((self.pos.x + self.rect.width/2 - 5, self.pos.y)))
 
         # Mise à jour et dessin des particules
         self.particles.update()
-
+        # Suppression des particules en fin de vie
         self.particles.remove([particle for particle in self.particles if particle.lifespan <= 0])
 
         self.move(dt, hits)
