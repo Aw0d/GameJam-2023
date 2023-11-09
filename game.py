@@ -15,6 +15,8 @@ from menu.lose_menu import LoseMenu
 from menu.win_menu import WinMenu
 
 class Game:
+    music_sound = pg.mixer.music.load("music/8bit-Cruising-Down.mp3")
+
     def __init__(self, screen: pg.Surface):
         # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
@@ -86,6 +88,8 @@ class Game:
 
         self.player = Player()
         self.all.add(self.player)
+        self.channel = pg.mixer.Channel(5)
+        self.channel.play(Game.music_sound , -1)
 
         # Vrai si le jeu est fini
         self.isEnded = False
