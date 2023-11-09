@@ -8,11 +8,11 @@ class Level:
         # La valeur est un tuple contenant les coordonnées
         # Pour un Ground, c'est une liste contenant deux tuples, la position et la taille
         # exemple : {
-        #   "Chair": (10, 10),
-        #   "Table": (60, 10),
-        #   "Ground": [(100, 10), (50, 50)]
+        #   ["Chair", (10, 10)],
+        #   ["Table", (60, 10)],
+        #   ["Ground", [(100, 10), (50, 50)]]
         # }
-        self.all = {}
+        self.all = []
 
     def setName(self, name):
         self.name  = name

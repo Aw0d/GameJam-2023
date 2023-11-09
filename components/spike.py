@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Spike(pg.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, pos):
         super().__init__()
 
         # size = 30 # Taille par défaut
@@ -28,7 +28,7 @@ class Spike(pg.sprite.Sprite):
         # Obtenir le rectangle englobant le triangle
         self.rect = self.image.get_rect()
 
-        self.pos = pg.math.Vector2((x, y))
+        self.pos = pg.math.Vector2(pos)
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
         self.rect.bottomleft = self.pos
 

@@ -78,13 +78,17 @@ class Game:
         self.current_end_pause_time = 0
 
     def load_level(self, level : Level):        
-        for object, info in level.all.items():
+        for _ in level.all:
+            object, info = _
             match object:
                 case "Chair":
                     self.all.add(Chair(info))
 
                 case "Table":
                     self.all.add(Table(info))
+
+                case "Spike":
+                    self.all.add(Spike(info))
                 
                 case "Ground":
                     self.all.add(Ground(info[0], info[1]))
