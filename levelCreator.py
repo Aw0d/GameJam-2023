@@ -75,15 +75,15 @@ class GameEditor:
                 case pg.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         posMouse = pg.mouse.get_pos()
-                        if (posMouse[0] > 390 or posMouse[1] > 675): 
+                        if (posMouse[0] > 390 or posMouse[1] > 675):
+                            if posMouse[1] > 688:
+                                posMouse = (posMouse[0], 688) 
                             if self.menu_contents.getSelection() == 1:
                                 if not self.click1:
                                     self.click1 = posMouse
                                 elif not self.click2:
                                     self.click2 = posMouse
                                     self.all.add(Ground(self.click1, (abs(self.click2[0] - self.click1[0]), abs(self.click2[1] - self.click1[1]))))
-                                    
-                                    
                                     self.click1 = None
                                     self.click2 = None
                             elif self.menu_contents.getSelection() == 2:
@@ -99,10 +99,12 @@ class GameEditor:
                             elif self.menu_contents.getSelection() == 7:
                                 self.all.add(EndGame(posMouse))
                             elif self.menu_contents.getSelection() == 8:
-                                for sprite in self.all:
-                                    if sprite.rect.collidepoint(posMouse):
-                                        self.all.remove(sprite)
-                        
+                                if (posMouse[1] < 688):
+                                    for sprite in self.all:
+                                        if sprite.rect.collidepoint(posMouse):
+                                            self.all.remove(sprite)
+                case pg.QUIT:
+                    self.isEnded = True
         self.menu_contents.update(events)
         if self.menu_contents.getSelection() == 9:
             name = "test"
