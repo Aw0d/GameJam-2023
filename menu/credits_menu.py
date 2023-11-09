@@ -14,11 +14,11 @@ class CreditsMenu():
         titre5 = Text("Font", (screen.get_width()/1.6, 620), 20, (0, 0, 0), "fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
         titre6 = Text("Credit", (screen.get_width()/1.02, 620), 20, (0, 0, 0), "fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
 
-        text1 = Text("https://pixabay.com/", (screen.get_width()/1.6, 460), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
+        text1 = Text("pixabay.com", (screen.get_width()/1.6, 460), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
         text2 = Text("CAMUS Mathieu \n KALIC Benjamin \n ARCHILA Cesar \n KAZI-TANI Sami", (screen.get_width()/1.6, 305), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
         text3 = Text("KAZI-TANI Sami", (screen.get_width()/1.02, 260), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
-        text4 = Text("https://giventofly.github.io/pixelit \n https://getemoji.com/ \n https://www.pngwing.com/", (screen.get_width()/1.02, 485), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
-        text5 = Text("https://www.fontspace.com/", (screen.get_width()/1.6, 655), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
+        text4 = Text("giventofly.github.io/pixelit \n getemoji.com \n www.pngwing.com", (screen.get_width()/1.02, 485), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
+        text5 = Text("www.fontspace.com", (screen.get_width()/1.6, 655), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
         text6 = Text("LOSER POV", (screen.get_width()/1.02, 655), 15, (0, 0, 0), "fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", 800)
 
         back_button = Button((screen.get_width() - 216/2 - 15, screen.get_height() - 70/2 - 15), "Back", lambda: "back", "small_green")
