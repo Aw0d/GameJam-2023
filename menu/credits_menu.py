@@ -10,7 +10,7 @@ class CreditsMenu():
         titre1 = Text("Sounds", (screen.get_width()/1.6, 420), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
         titre2 = Text("Developers", (screen.get_width()/1.6, 220), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
         titre3 = Text("Designer", (screen.get_width()/1.02, 220), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
-        titre4 = Text("Image", (screen.get_width()/1.02, 420), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
+        titre4 = Text("Images", (screen.get_width()/1.02, 420), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
         titre5 = Text("Font", (screen.get_width()/1.6, 620), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
         titre6 = Text("Credit", (screen.get_width()/1.02, 620), 20, (0, 0, 0), "ressources/fonts/MarioWorldPixelColor-3zBwX.ttf", 800)
 
