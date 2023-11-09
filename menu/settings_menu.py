@@ -41,12 +41,12 @@ class Settings():
                 match event.type:
                     case pg.MOUSEBUTTONUP:
                         if event.button == pg.BUTTON_LEFT:
-                            if self.mute_button:
-                                self.mute_button.text.update_text("Mute Music")
-                                self.mute_button.change_color("green")
-                            else:
+                            if self.music_on:
                                 self.mute_button.text.update_text("Unmute Music")
                                 self.mute_button.change_color("red")
+                            else:
+                                self.mute_button.text.update_text("Mute Music")
+                                self.mute_button.change_color("green")
                             self.music_on = not self.music_on
                             return self.mute_button.clicked()                    
         else:
