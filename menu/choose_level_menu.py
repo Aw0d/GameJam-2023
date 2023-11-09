@@ -10,7 +10,7 @@ class ChooseLevelMenu():
 
         repertoire_levels = "levels"
 
-        nb_levels = len([f for f in os.listdir(repertoire_levels) if os.path.isfile(os.path.join(repertoire_levels, f))])
+        nb_levels = min(len([f for f in os.listdir(repertoire_levels) if os.path.isfile(os.path.join(repertoire_levels, f))]), 14)
 
         self.list_buttons = []
         self.all = pg.sprite.RenderUpdates()
@@ -28,6 +28,11 @@ class ChooseLevelMenu():
             if current_width > screen.get_width():
                 current_width = 24 + 309/2
                 current_height += 100 + 24
+
+        back_button = Button((screen.get_width() - 216/2 - 15, screen.get_height() - 70/2 - 15), "Back", lambda: "back", "small_green")
+
+        self.list_buttons.append(back_button)
+        self.all.add(back_button)
 
         self.background = pg.image.load("images/menu/fond.png")
     

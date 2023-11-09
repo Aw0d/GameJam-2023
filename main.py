@@ -134,6 +134,8 @@ def main():
             choose_level_menu.show()
 
             action = choose_level_menu.update(events)
+            if action == "back":
+                state = 0
 
             pg.display.flip()
     # Fin utilisation de pygame
