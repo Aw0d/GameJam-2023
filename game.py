@@ -172,6 +172,7 @@ class Game:
                     # Si on n'est pas au dessus ou en dessous
                     if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 45:
                         self.isLosed = True
+                        pg.mixer.music.stop()
                 elif isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom > sprite.rect.top + 30:
@@ -179,6 +180,7 @@ class Game:
                 elif isinstance(sprite, Spike):
                     if self.player.rect.clipline(sprite.rect.bottomleft, sprite.rect.midtop) or self.player.rect.clipline(sprite.rect.bottomright, sprite.rect.midtop):
                         self.isLosed = True
+                        pg.mixer.music.stop()
                 elif isinstance(sprite, Bonus):
                     sprite.collect()
                     self.all.remove(sprite)
@@ -196,6 +198,8 @@ class Game:
 
             if not self.isLosed and not self.endGame.isEnded:
                 if self.isWin:
+                    # On arrête la musique
+                    pg.mixer.music.stop()
                     self.all.remove(self.player)
                     self.speed = 0
 
