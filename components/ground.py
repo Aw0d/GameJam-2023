@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Ground(pg.sprite.Sprite):
-    def __init__(self, size, pos):
+    def __init__(self, pos, size):
         super().__init__()
 
         self.size = size

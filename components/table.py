@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Table(pg.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, pos):
         super().__init__()
 
         self.image = pg.image.load("images/background/table.png")
@@ -9,7 +9,7 @@ class Table(pg.sprite.Sprite):
         # Donne une couleur
         # self.image.fill("brown")
 
-        self.pos = pg.math.Vector2((x, y))
+        self.pos = pg.math.Vector2(pos)
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
         self.rect.bottomleft = self.pos
 

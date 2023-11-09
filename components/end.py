@@ -1,16 +1,15 @@
-from time import sleep
 import pygame as pg
 
 class EndGame(pg.sprite.Sprite):
     imgs_end = [pg.image.load("images/end/end_without_player.png"), pg.image.load("images/end/end_with_player.png")]
 
-    def __init__(self, x, y):
+    def __init__(self, pos):
         super().__init__()
 
         self.image = EndGame.imgs_end[0]
         self.rect = self.image.get_rect()
 
-        self.pos = pg.math.Vector2((x, y))
+        self.pos = pg.math.Vector2(pos)
         # Positionner le rectangle aux coordonnées spécifiées (x, y)
         self.rect.bottomleft = self.pos
 
