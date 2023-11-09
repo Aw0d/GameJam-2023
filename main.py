@@ -46,6 +46,7 @@ def main():
     
     # Variable contenant le jeu
     game = None
+    current_level = None
 
     credits_menu = CreditsMenu(screen)
 
@@ -87,7 +88,7 @@ def main():
             if action == "end":
                 state = 0
             elif action == "retry":
-                game = Game(screen)
+                game = Game(screen, current_level)
 
             # Met à jour le jeu sachant que dt millisecondes se sont écoulées
             game.update(dt, events)
@@ -136,8 +137,8 @@ def main():
                 state = 0
             elif action != None:
                 with open("levels/" + action, 'rb') as fichier:
-                    level = pickle.load(fichier)
-                game = Game(screen, level)
+                    current_level = pickle.load(fichier)
+                game = Game(screen, current_level)
                 state = 1
 
             pg.display.flip()
