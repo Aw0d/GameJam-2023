@@ -52,6 +52,7 @@ class Game:
 
         self.all.add(self.background)
         self.all.add(self.ground)
+        self.endGame = None
 
         self.load_level(level)
         
@@ -176,14 +177,17 @@ class Game:
                     # Si on n'est pas au dessus ou en dessous
                     if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 45:
                         self.isLosed = True
+                        pg.mixer.Sound("ressources/sounds/game-over.mp3").play()
                         pg.mixer.music.stop()
                 elif isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom > sprite.rect.top + 30:
                         self.isLosed = True
+                        pg.mixer.Sound("ressources/sounds/game-over.mp3").play()
                 elif isinstance(sprite, Spike):
                     if self.player.rect.clipline(sprite.rect.bottomleft, sprite.rect.midtop) or self.player.rect.clipline(sprite.rect.bottomright, sprite.rect.midtop):
                         self.isLosed = True
+                        pg.mixer.Sound("ressources/sounds/game-over.mp3").play()
                         pg.mixer.music.stop()
                 elif isinstance(sprite, Bonus):
                     sprite.collect()

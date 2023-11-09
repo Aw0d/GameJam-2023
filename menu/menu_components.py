@@ -131,3 +131,32 @@ class Image(pg.sprite.Sprite):
         self.pos = pg.math.Vector2(pos)
 
         self.rect.center = self.pos
+
+class TextBox(pg.sprite.Sprite):
+    def __init__(self, pos, width, height, font_size=32):
+        super().__init__()
+        self.image = pg.Surface((width, height))
+        self.rect = self.image.get_rect(topleft=pos)
+        self.color = pg.Color('dodgerblue2')
+        self.text = ''
+        self.font = pg.font.Font(None, font_size)
+
+    def update(self, event):
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_RETURN:
+                return self.text
+            elif event.key == pg.K_ESCAPE:
+                self.text = ''
+                return False
+            elif event.key == pg.K_BACKSPACE:
+                self.text = self.text[:-1]
+            else:
+                self.text += event.unicode
+
+        width = max(200, self.font.size(self.text)[0] + 10)
+        self.image.fill((255, 255, 255))
+        pg.draw.rect(self.image, self.color, (0, 0, width, self.rect.height), 2)
+
+        text_surface = self.font.render(self.text, True, self.color)
+        self.image.blit(text_surface, (5, 5))
+        return True
