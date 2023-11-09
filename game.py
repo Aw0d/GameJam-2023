@@ -52,11 +52,8 @@ class Game:
         self.all.add(self.ground)
 
         self.all.add(Chair(500, self.ground.rect.top))
-        self.all.add(Chair(540, self.ground.rect.top))
-        self.all.add(Chair(580, self.ground.rect.top))
-        self.all.add(Chair(620, self.ground.rect.top))
-        self.all.add(Chair(660, self.ground.rect.top))
-        self.all.add(Chair(700, self.ground.rect.top))
+
+        self.all.add(Table(700, self.ground.rect.top))
 
         self.all.add(Spike(1000, self.ground.rect.top))
 
