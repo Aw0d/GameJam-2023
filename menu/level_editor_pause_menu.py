@@ -1,0 +1,49 @@
+import pygame as pg
+from menu.menu_components import Button, Text
+
+class LevelEditorPauseMenu():
+    def __init__(self, screen : pg.Surface):
+        self.screen = screen
+
+        size = (500, 600)
+
+        pause_text = Text("Level editor paused!", (screen.get_width()/2, 150), 36, (0, 0, 0))
+
+        continue_button = Button((screen.get_width()/2, 300), "Continue", lambda:"continue")
+        menu_button = Button((screen.get_width()/2, 420), "Menu", lambda:"menu", "red")
+
+        self.list_buttons = [continue_button, menu_button]
+
+        self.all = pg.sprite.RenderUpdates()
+
+        self.all.add(pause_text)
+        self.all.add(continue_button)
+        self.all.add(menu_button)
+
+        self.background = pg.Surface(size)
+        self.background.set_alpha(0)
+
+    def update(self, events):
+        # Détection des hovers et des clicks sur les boutons
+        pos = pg.mouse.get_pos()
+        for button in self.list_buttons:
+            if button.rect.collidepoint(pos):
+                if not button.isHover:
+                    button.hover(True)
+                for event in events:
+                    match event.type:
+                        case pg.MOUSEBUTTONUP:
+                            if event.button == pg.BUTTON_LEFT:
+                                return button.clicked()                    
+            else:
+                if button.isHover:
+                    button.hover(False)
+
+    def show(self):
+        self.screen.blit(self.background, (self.screen.get_width()/2 - 500/2, self.screen.get_height()/2 - 600/2))
+
+        dirty = self.all.draw(self.screen)
+
+        for button in self.list_buttons:
+            button.draw_text(self.screen)
+        pg.display.update(dirty)

@@ -138,7 +138,7 @@ class TextBox(pg.sprite.Sprite):
         self.image = pg.Surface((width, height))
         self.rect = self.image.get_rect(center=pos)
         self.image.fill("grey")
-        self.color = pg.Color('dodgerblue2')
+        self.color = (68,114,179)
         self.text = ''
         self.font = pg.font.Font("ressources/fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", font_size)
         self.active = False

@@ -8,7 +8,7 @@ from components.spike import Spike
 from components.table import Table
 from components.chair import Chair
 from components.end import EndGame
-from menu.pause_menu import PauseMenu
+from menu.level_editor_pause_menu import LevelEditorPauseMenu
 from menu.menu_contents import MenuContents
 import pickle
 from components.level import Level
@@ -22,7 +22,7 @@ class LevelCreator:
 
         self.buttons = []
 
-        self.menu_pause = PauseMenu(self.screen)
+        self.menu_pause = LevelEditorPauseMenu(self.screen)
 
         self.background_color = (255,255,255)
 
@@ -71,7 +71,7 @@ class LevelCreator:
         for event in events:
             # Si on ferme la fenêtre, on arrête la boucle
             match event.type:
-                case pg.KEYUP:
+                case pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         if not self.textBox.active:
                             if self.isPaused:
