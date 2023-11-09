@@ -1,4 +1,7 @@
 import pygame as pg
+from components.book import Book
+from components.spike import Spike
+
 
 class Player(pg.sprite.Sprite):
     run_ani = [pg.image.load("images/characters/player/run1.png"), pg.image.load("images/characters/player/run2.png"),
@@ -76,7 +79,7 @@ class Player(pg.sprite.Sprite):
     def ground_colision(self, hits):
       if self.vel_y > 0:
         i = 0
-        while i < len(hits) and (type(hits[i]).__name__ in ["Book"]):
+        while i < len(hits) and isinstance(hits[i], (Book, Spike)):
             i += 1
         if i < len(hits) :
 
