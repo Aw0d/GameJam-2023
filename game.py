@@ -171,11 +171,13 @@ class Game:
                     if self.player.rect.clipline(sprite.rect.bottomleft, sprite.rect.midtop) or self.player.rect.clipline(sprite.rect.bottomright, sprite.rect.midtop):
                         self.isLosed = True
                 elif isinstance(sprite, Bonus):
+                    sprite.collect()
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
                     self.hud.update_score(self.bonus)
                 elif isinstance(sprite, Malus):
+                    sprite.collect()
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus -= 1

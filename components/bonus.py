@@ -3,6 +3,7 @@ from random import randint
 
 class Bonus(pg.sprite.Sprite):
     imgs_bonus = [pg.image.load("images/bonus/books.png"), pg.image.load("images/bonus/lesson.png")]
+    recolt_sound = pg.mixer.Sound("sounds/recolt-bonus.mp3")
 
     def __init__(self, pos):
         super().__init__()
@@ -32,3 +33,7 @@ class Bonus(pg.sprite.Sprite):
         # Met à jour l'image et le rect
         self.image = pg.transform.rotozoom(self.original_image, 0, self.zoom)
         self.rect = self.image.get_rect(center=self.rect.center)
+
+    def collect(self):
+        self.channel = pg.mixer.Channel(4)
+        self.channel.play(Bonus.recolt_sound)
