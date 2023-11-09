@@ -164,10 +164,6 @@ class Game:
                     # Si on n'est pas au dessus ou en dessous
                     if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 50:
                         self.isLosed = True
-                elif isinstance(sprite, Chair):
-                    # Si on n'est pas au dessus
-                    if self.player.rect.bottom > sprite.rect.top + 30 +28:
-                        self.isLosed = True
                 elif isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom > sprite.rect.top + 30:
