@@ -7,7 +7,9 @@ class CreditsMenu():
 
         logo = Image((500, 174), (512, 100), "images/logo.png")
 
-        credits_text = Text("credits", (screen.get_width()/2, 350), 24, (0, 0, 0), None)
+        str_credit = "crédit: \n LOSER POV \n \n images: \n https://giventofly.github.io/pixelit/ \n https://getemoji.com/ \n https://www.pngwing.com/en/free-png-zfywk \n \n font: \n https://www.fontspace.com/ \n \n sounds: \n https://pixabay.com/"
+
+        credits_text = Text(str_credit, (screen.get_width()/2, 350), 24, (0, 0, 0), None, 800)
 
         back_button = Button((screen.get_width() - 216/2 - 15, screen.get_height() - 70/2 - 15), "Back", lambda: "back", "small_green")
 

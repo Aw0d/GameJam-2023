@@ -58,8 +58,10 @@ class Button(pg.sprite.Sprite):
         self.isHover = False
         return self.func()
 
+import pygame as pg
+
 class Text(pg.sprite.Sprite):
-    def __init__(self, text, pos, font_size=24, color=(255, 255, 255), font_name="fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf"):
+    def __init__(self, text, pos, font_size=24, color=(255, 255, 255), font_name="fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", max_width=None):
         super().__init__()
 
         self.text = text
@@ -67,19 +69,54 @@ class Text(pg.sprite.Sprite):
         self.color = color
         self.font_size = font_size
         self.font_name = font_name
+        self.max_width = max_width
         self.font = pg.font.Font(font_name, font_size)
         self.image = self.render_text()
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
 
     def render_text(self):
-        return self.font.render(self.text, True, self.color)
+        if self.max_width:
+            lines = self.split_text_lines(self.text, self.max_width)
+            rendered_lines = [self.font.render(line, True, self.color) for line in lines]
+            total_height = sum(line.get_height() for line in rendered_lines)
+            surface = pg.Surface((self.max_width, total_height), pg.SRCALPHA)
+            y_offset = 0
+            for line in rendered_lines:
+                surface.blit(line, (0, y_offset))
+                y_offset += line.get_height()
+            return surface
+        else:
+            return self.font.render(self.text, True, self.color)
+
+    def split_text_lines(self, text, max_width):
+        words = text.split(' ')
+        lines = []
+        current_line = ''
+        
+        for word in words:
+            if word != "\n":
+                test_line = current_line + ' ' + word if current_line else word
+                width, _ = self.font.size(test_line)
+                
+                if width <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            else:
+                lines.append(current_line)
+                current_line = ''
+        
+        lines.append(current_line)
+        return lines
 
     def update_text(self, text):
         self.text = text
         self.image = self.render_text()
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
 
 class Image(pg.sprite.Sprite):
     def __init__(self, size, pos, image):
