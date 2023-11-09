@@ -147,7 +147,8 @@ class GameEditor:
         else:
             # Récupération des touches appuyées
             pressed_keys = pg.key.get_pressed()
-            if pressed_keys[pg.K_RIGHT]:
+            if pressed_keys[pg.K_RIGHT] and self.ground.rect.right > 1024:
+                print(self.ground.rect.right)
                 self.all.update(dt, self.speed)
             elif pressed_keys[pg.K_LEFT] and self.ground.rect.left < 0:
                 self.all.update(dt, -self.speed)
