@@ -123,7 +123,8 @@ class Image(pg.sprite.Sprite):
         super().__init__()
 
         self.image = pg.image.load(image)
-        self.image = pg.transform.smoothscale(self.image, size)
+        if size:
+            self.image = pg.transform.smoothscale(self.image, size)
 
         self.rect = self.image.get_rect()
 
