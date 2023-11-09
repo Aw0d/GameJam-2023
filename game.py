@@ -52,6 +52,7 @@ class Game:
 
         self.all.add(self.background)
         self.all.add(self.ground)
+        self.endGame = None
 
         self.load_level(level)
         
