@@ -39,7 +39,7 @@ class LevelCreator:
 
         #création background et ground
         self.background = Background(self.screen.get_size())
-        self.ground = Ground((0, self.screen.get_height()), (10000, 80))
+        self.ground = Ground((0, self.screen.get_height()), (50000, 80))
 
         #vitesse de déplacement dans l'éditeur de niveau
         self.speed = 0.8
@@ -81,15 +81,15 @@ class LevelCreator:
                 case pg.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         posMouse = pg.mouse.get_pos()
-                        if (posMouse[0] > 390 or posMouse[1] > 675): 
+                        if (posMouse[0] > 390 or posMouse[1] > 675):
+                            if posMouse[1] > 688:
+                                posMouse = (posMouse[0], 688) 
                             if self.menu_contents.getSelection() == 1:
                                 if not self.click1:
                                     self.click1 = posMouse
                                 elif not self.click2:
                                     self.click2 = posMouse
                                     self.all.add(Ground(self.click1, (abs(self.click2[0] - self.click1[0]), abs(self.click2[1] - self.click1[1]))))
-                                    
-                                    
                                     self.click1 = None
                                     self.click2 = None
                             elif self.menu_contents.getSelection() == 2:
@@ -105,12 +105,27 @@ class LevelCreator:
                             elif self.menu_contents.getSelection() == 7:
                                 self.all.add(EndGame(posMouse))
                             elif self.menu_contents.getSelection() == 8:
-                                for sprite in self.all:
-                                    if sprite.rect.collidepoint(posMouse):
-                                        self.all.remove(sprite)
-                        
+                                if (posMouse[1] < 688):
+                                    for sprite in self.all:
+                                        if sprite.rect.collidepoint(posMouse):
+                                            self.all.remove(sprite)
+                case pg.QUIT:
+                    self.isEnded = True
         print(self.textBox.active)
         if self.menu_contents.getSelection() == 9:
+            name = "test"
+            level = Level(name)
+            correction = -self.ground.rect.left
+            for element in self.all.spritedict:
+                if isinstance(element, Ground):
+                    level.all.append([element.__class__.__name__, [(element.rect.left + correction, element.rect.bottom), element.size]])
+                else:
+                    level.all.append([element.__class__.__name__, (element.rect.centerx + correction ,element.rect.bottom)])
+            
+            with open(f"levels/{name}", "wb") as f1:
+                pickle.dump(level, f1)
+            f1.close()
+            self.isEnded = True
             self.textBox.active = True
             if self.name == False:
                 self.textBox.active = False
@@ -142,7 +157,7 @@ class LevelCreator:
         else:
             # Récupération des touches appuyées
             pressed_keys = pg.key.get_pressed()
-            if pressed_keys[pg.K_RIGHT]:
+            if pressed_keys[pg.K_RIGHT] and self.ground.rect.right > 1024:
                 self.all.update(dt, self.speed)
             elif pressed_keys[pg.K_LEFT] and self.ground.rect.left < 0:
                 self.all.update(dt, -self.speed)
