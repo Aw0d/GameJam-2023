@@ -110,11 +110,11 @@ class LevelCreator:
                                         if sprite.rect.collidepoint(posMouse):
                                             self.all.remove(sprite)
                         
-        print(self.textBox.active)
         if self.menu_contents.getSelection() == 9:
             self.textBox.active = True
             if self.name == False:
                 self.textBox.active = False
+                self.name = None
                 self.menu_contents.setSelection(1)
             elif self.name == None:
                 self.name = self.textBox.handle_event(events)
