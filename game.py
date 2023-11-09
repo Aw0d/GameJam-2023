@@ -8,6 +8,7 @@ from components.chair import Chair
 from components.bonus import Bonus
 from components.malus import Malus
 from components.end import EndGame
+import time
 
 from components.level import Level
 
@@ -143,12 +144,7 @@ class Game:
             elif action == "menu":
                 self.isEnded = True
         elif self.isLosed:
-            self.menu_lose.show()
-            action = self.menu_lose.update(events)
-            if action == "retry":
-                self.retry = True
-            elif action == "menu":
-                self.isEnded = True
+            self.retry = True
         elif self.endGame.isEnded:
             self.menu_win.show(self.bonus)
             action = self.menu_win.update(events)
