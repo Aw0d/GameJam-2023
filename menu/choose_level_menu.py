@@ -19,7 +19,8 @@ class ChooseLevelMenu():
         current_width = 24 + 309/2
         current_height = 120 + 100/2
         for level in level_files:
-            button = Button((current_width, current_height), level, lambda: level)
+            print(level)
+            button = Button((current_width, current_height), level, lambda level=level: level)
             
             self.list_buttons.append(button)
             self.all.add(button)
