@@ -9,7 +9,7 @@ class Ground(pg.sprite.Sprite):
         self.image = pg.Surface(size)
         self.rect = self.image.get_rect()
         
-        self.tile_image = pg.image.load("images/ground1.png")
+        self.tile_image = pg.image.load("ressources/images/ground1.png")
         self.tile_size = self.tile_image.get_size()
 
         self.pos = pg.math.Vector2(pos)

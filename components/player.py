@@ -7,17 +7,17 @@ from components.particle import Particle
 
 
 class Player(pg.sprite.Sprite):
-    run_ani = [pg.image.load("images/characters/player/run1.png"), pg.image.load("images/characters/player/run2.png"),
-                pg.image.load("images/characters/player/run3.png"), pg.image.load("images/characters/player/run4.png"),
-                pg.image.load("images/characters/player/run5.png"),]
+    run_ani = [pg.image.load("ressources/images/characters/player/run1.png"), pg.image.load("ressources/images/characters/player/run2.png"),
+                pg.image.load("ressources/images/characters/player/run3.png"), pg.image.load("ressources/images/characters/player/run4.png"),
+                pg.image.load("ressources/images/characters/player/run5.png"),]
     
-    jump_ani = [pg.image.load("images/characters/player/saut1.png"), pg.image.load("images/characters/player/saut2.png")]
+    jump_ani = [pg.image.load("ressources/images/characters/player/saut1.png"), pg.image.load("ressources/images/characters/player/saut2.png")]
 
-    slide_ani = [pg.image.load("images/characters/player/slide1.png"), pg.image.load("images/characters/player/slide2.png")]
+    slide_ani = [pg.image.load("ressources/images/characters/player/slide1.png"), pg.image.load("ressources/images/characters/player/slide2.png")]
 
-    jump_sound = pg.mixer.Sound("sounds/jump.mp3")
-    slide_sound = pg.mixer.Sound("sounds/slide.mp3")
-    running_sound = pg.mixer.Sound("sounds/running.mp3")
+    jump_sound = pg.mixer.Sound("ressources/sounds/jump.mp3")
+    slide_sound = pg.mixer.Sound("ressources/sounds/slide.mp3")
+    running_sound = pg.mixer.Sound("ressources/sounds/running.mp3")
 
     def __init__(self):
         super().__init__()

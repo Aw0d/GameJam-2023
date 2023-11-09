@@ -1,7 +1,7 @@
 import pygame as pg
 
 class EndGame(pg.sprite.Sprite):
-    imgs_end = [pg.image.load("images/end/end_without_player.png"), pg.image.load("images/end/end_with_player.png")]
+    imgs_end = [pg.image.load("ressources/images/end/end_without_player.png"), pg.image.load("ressources/images/end/end_with_player.png")]
 
     def __init__(self, pos):
         super().__init__()
@@ -25,4 +25,4 @@ class EndGame(pg.sprite.Sprite):
         self.image = EndGame.imgs_end[1]
         
         if not self.channel.get_busy():
-            self.channel.play(pg.mixer.Sound("sounds/victory.mp3"))
+            self.channel.play(pg.mixer.Sound("ressources/sounds/victory.mp3"))

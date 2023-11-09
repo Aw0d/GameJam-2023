@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Chair(pg.sprite.Sprite):
-    img_chair = pg.image.load("images/background/chair.png")
+    img_chair = pg.image.load("ressources/images/background/chair.png")
     def __init__(self, pos):
         super().__init__()
 

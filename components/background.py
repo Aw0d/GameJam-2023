@@ -2,14 +2,14 @@ import random
 import pygame as pg
 
 class Background(pg.sprite.Sprite):
-    background_img = [pg.image.load("images/background/background1.png"), pg.image.load("images/background/background2.png"),
-                      pg.image.load("images/background/background3.png"), pg.image.load("images/background/background4.png")]
+    background_img = [pg.image.load("ressources/images/background/background1.png"), pg.image.load("ressources/images/background/background2.png"),
+                      pg.image.load("ressources/images/background/background3.png"), pg.image.load("ressources/images/background/background4.png")]
     
     def __init__(self, screen_size):
         super().__init__()
         self.screen_size = screen_size
-        self.image = pg.image.load("images/background/first_background.png")
-        self.image2 = pg.image.load("images/background/second_background.png")
+        self.image = pg.image.load("ressources/images/background/first_background.png")
+        self.image2 = pg.image.load("ressources/images/background/second_background.png")
         self.rect = self.image.get_rect()
 
         self.pos = pg.math.Vector2((0, 0))

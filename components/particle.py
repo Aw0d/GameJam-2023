@@ -3,8 +3,8 @@ import random
 
 # Classe pour les particules
 class Particle(pg.sprite.Sprite):
-    imgs_particles = [pg.image.load("images/particles/particles1.png"), pg.image.load("images/particles/particles2.png"),
-                      pg.image.load("images/particles/particles3.png"), pg.image.load("images/particles/particles4.png")]
+    imgs_particles = [pg.image.load("ressources/images/particles/particles1.png"), pg.image.load("ressources/images/particles/particles2.png"),
+                      pg.image.load("ressources/images/particles/particles3.png"), pg.image.load("ressources/images/particles/particles4.png")]
 
     def __init__(self, pos):
         super().__init__()

@@ -2,8 +2,8 @@ import pygame as pg
 from random import randint
 
 class Bonus(pg.sprite.Sprite):
-    imgs_bonus = [pg.image.load("images/bonus/books.png"), pg.image.load("images/bonus/lesson.png")]
-    recolt_sound = pg.mixer.Sound("sounds/recolt-bonus.mp3")
+    imgs_bonus = [pg.image.load("ressources/images/bonus/books.png"), pg.image.load("ressources/images/bonus/lesson.png")]
+    recolt_sound = pg.mixer.Sound("ressources/sounds/recolt-bonus.mp3")
 
     def __init__(self, pos):
         super().__init__()

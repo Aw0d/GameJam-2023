@@ -5,7 +5,7 @@ class MainMenu():
     def __init__(self, screen : pg.Surface):
         self.screen = screen
 
-        logo = Image((500, 174), (512, 100), "images/logo.png")
+        logo = Image((500, 174), (512, 100), "ressources/images/logo.png")
 
         start_button = Button((512, 300), "Play", lambda: "play")
         menu_button = Button((512, 425), "Settings", lambda:"settings")
@@ -24,7 +24,7 @@ class MainMenu():
         self.all.add(exit_button)
         self.all.add(credits_button)
 
-        self.background = pg.image.load("images/menu/fond.png")
+        self.background = pg.image.load("ressources/images/menu/fond.png")
     
     def update(self, events):
         # Détection des hovers et des clicks sur les boutons

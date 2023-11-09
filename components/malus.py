@@ -2,8 +2,8 @@ import pygame as pg
 from random import randint
 
 class Malus(pg.sprite.Sprite):
-    imgs_malus = [pg.image.load("images/malus/clock.png"), pg.image.load("images/malus/alarm.png")]
-    recolt_sound = pg.mixer.Sound("sounds/recolt-malus.mp3")
+    imgs_malus = [pg.image.load("ressources/images/malus/clock.png"), pg.image.load("ressources/images/malus/alarm.png")]
+    recolt_sound = pg.mixer.Sound("ressources/sounds/recolt-malus.mp3")
 
     def __init__(self, pos):
         super().__init__()

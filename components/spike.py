@@ -23,7 +23,7 @@ class Spike(pg.sprite.Sprite):
         # pg.draw.polygon(self.image, self.color, [p1, p2, p3])
 
         # Créer une image pour le triangle
-        self.image = pg.image.load("images/malus/pencil.png")
+        self.image = pg.image.load("ressources/images/malus/pencil.png")
 
         # Obtenir le rectangle englobant le triangle
         self.rect = self.image.get_rect()

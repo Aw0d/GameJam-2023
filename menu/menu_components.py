@@ -1,12 +1,12 @@
 import pygame as pg
 
 class Button(pg.sprite.Sprite):
-    btn_image_green = [pg.image.load("images/menu/green_button.png"), pg.image.load("images/menu/green_button_hover.png")]
-    btn_image_small_green = [pg.image.load("images/menu/small_green_button.png"), pg.image.load("images/menu/small_green_button_hover.png")]
-    btn_image_red = [pg.image.load("images/menu/red_button.png"), pg.image.load("images/menu/red_button_hover.png")]
+    btn_image_green = [pg.image.load("ressources/images/menu/green_button.png"), pg.image.load("ressources/images/menu/green_button_hover.png")]
+    btn_image_small_green = [pg.image.load("ressources/images/menu/small_green_button.png"), pg.image.load("ressources/images/menu/small_green_button_hover.png")]
+    btn_image_red = [pg.image.load("ressources/images/menu/red_button.png"), pg.image.load("ressources/images/menu/red_button_hover.png")]
 
-    btn_clicked_sound = pg.mixer.Sound("sounds/button_clicked.mp3")
-    btn_hover_sound = pg.mixer.Sound("sounds/button_hover.mp3")
+    btn_clicked_sound = pg.mixer.Sound("ressources/sounds/button_clicked.mp3")
+    btn_hover_sound = pg.mixer.Sound("ressources/sounds/button_hover.mp3")
     channel = pg.mixer.Channel(2)
 
     def __init__(self, pos, text, func, btn_color = "green"):
@@ -61,7 +61,7 @@ class Button(pg.sprite.Sprite):
 import pygame as pg
 
 class Text(pg.sprite.Sprite):
-    def __init__(self, text, pos, font_size=24, color=(255, 255, 255), font_name="fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", max_width=None):
+    def __init__(self, text, pos, font_size=24, color=(255, 255, 255), font_name="ressources/fonts/TypefaceMarioWorldPixelFilledRegular-rgVMx.ttf", max_width=None):
         super().__init__()
 
         self.text = text

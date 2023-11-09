@@ -8,7 +8,7 @@ class Settings():
         self.screen = screen
         
         
-        logo = Image((384, 145), (512, 100), "images/logo.png")
+        logo = Image((384, 145), (512, 100), "ressources/images/logo.png")
         
         
         self.mute_button = Button((300, 364), "Mute Music", lambda : "Music")
@@ -29,7 +29,7 @@ class Settings():
         self.all.add(self.sound_effect_button)
         self.all.add(self.back_button)
         
-        self.background = pg.image.load("images/menu/fond.png")
+        self.background = pg.image.load("ressources/images/menu/fond.png")
         
     def update(self, events):
         # Détection des hovers et des clicks sur les boutons

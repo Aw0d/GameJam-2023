@@ -34,7 +34,7 @@ class ChooseLevelMenu():
         self.list_buttons.append(back_button)
         self.all.add(back_button)
 
-        self.background = pg.image.load("images/menu/fond.png")
+        self.background = pg.image.load("ressources/images/menu/fond.png")
     
     def update(self, events):
         # Détection des hovers et des clicks sur les boutons

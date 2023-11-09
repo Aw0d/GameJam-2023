@@ -9,7 +9,7 @@ from components.bonus import Bonus
 from components.malus import Malus
 from components.end import EndGame
 
-from level.level import Level
+from components.level import Level
 
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
@@ -65,7 +65,7 @@ class Game:
         self.all.add(self.player)
         
         # Musique de fond
-        pg.mixer.music.load("music/8bit-Cruising-Down.mp3")
+        pg.mixer.music.load("ressources/music/8bit-Cruising-Down.mp3")
         pg.mixer.music.play(-1)
 
         # Vrai si le jeu est fini

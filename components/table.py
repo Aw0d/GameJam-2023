@@ -4,7 +4,7 @@ class Table(pg.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
 
-        self.image = pg.image.load("images/background/table.png")
+        self.image = pg.image.load("ressources/images/background/table.png")
         self.rect = self.image.get_rect()
         # Donne une couleur
         # self.image.fill("brown")
