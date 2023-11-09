@@ -72,6 +72,8 @@ class Text(pg.sprite.Sprite):
     def update_text(self, text):
         self.text = text
         self.image = self.render_text()
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
 
 class Image(pg.sprite.Sprite):
     def __init__(self, size, pos, image):
