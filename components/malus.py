@@ -3,6 +3,7 @@ from random import randint
 
 class Malus(pg.sprite.Sprite):
     imgs_malus = [pg.image.load("images/malus/clock.png"), pg.image.load("images/malus/alarm.png")]
+    recolt_sound = pg.mixer.Sound("sounds/recolt-malus.mp3")
 
     def __init__(self, pos):
         super().__init__()
@@ -32,3 +33,7 @@ class Malus(pg.sprite.Sprite):
         # Met à jour l'image et le rect
         self.image = pg.transform.rotozoom(self.original_image, 0, self.zoom)
         self.rect = self.image.get_rect(center=self.rect.center)
+
+    def collect(self):
+        self.channel = pg.mixer.Channel(4)
+        self.channel.play(Malus.recolt_sound)

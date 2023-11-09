@@ -1,3 +1,4 @@
+from time import sleep
 import pygame as pg
 
 class EndGame(pg.sprite.Sprite):
@@ -25,4 +26,4 @@ class EndGame(pg.sprite.Sprite):
         self.image = EndGame.imgs_end[1]
         
         if not self.channel.get_busy():
-            self.channel.play(pg.mixer.Sound("sounds/end.mp3"))
+            self.channel.play(pg.mixer.Sound("sounds/victory.mp3"))
