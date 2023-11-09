@@ -109,23 +109,9 @@ class LevelCreator:
                                     for sprite in self.all:
                                         if sprite.rect.collidepoint(posMouse):
                                             self.all.remove(sprite)
-                case pg.QUIT:
-                    self.isEnded = True
+                        
         print(self.textBox.active)
         if self.menu_contents.getSelection() == 9:
-            name = "test"
-            level = Level(name)
-            correction = -self.ground.rect.left
-            for element in self.all.spritedict:
-                if isinstance(element, Ground):
-                    level.all.append([element.__class__.__name__, [(element.rect.left + correction, element.rect.bottom), element.size]])
-                else:
-                    level.all.append([element.__class__.__name__, (element.rect.centerx + correction ,element.rect.bottom)])
-            
-            with open(f"levels/{name}", "wb") as f1:
-                pickle.dump(level, f1)
-            f1.close()
-            self.isEnded = True
             self.textBox.active = True
             if self.name == False:
                 self.textBox.active = False
@@ -134,11 +120,12 @@ class LevelCreator:
                 self.name = self.textBox.handle_event(events)
             else:
                 level = Level(self.name)
+                correction = -self.ground.rect.left
                 for element in self.all.spritedict:
                     if isinstance(element, Ground):
-                        level.all.append([element.__class__.__name__, [element.pos, element.size]])
+                        level.all.append([element.__class__.__name__, [(element.rect.left + correction, element.rect.bottom), element.size]])
                     else:
-                        level.all.append([element.__class__.__name__, element.pos])
+                        level.all.append([element.__class__.__name__, (element.rect.centerx + correction ,element.rect.bottom)])
                 
                 with open(f"levels/{self.name}", "wb") as f1:
                     pickle.dump(level, f1)
