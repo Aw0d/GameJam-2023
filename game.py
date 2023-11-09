@@ -44,7 +44,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground((0, self.screen.get_height()), (10000, 80))
+        self.ground = Ground((0, self.screen.get_height()), (50000, 80))
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect

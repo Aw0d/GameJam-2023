@@ -38,7 +38,7 @@ class GameEditor:
 
         #création background et ground
         self.background = Background(self.screen.get_size())
-        self.ground = Ground((0, self.screen.get_height()), (10000, 80))
+        self.ground = Ground((0, self.screen.get_height()), (50000, 80))
 
         #vitesse de déplacement dans l'éditeur de niveau
         self.speed = 0.8
@@ -148,7 +148,6 @@ class GameEditor:
             # Récupération des touches appuyées
             pressed_keys = pg.key.get_pressed()
             if pressed_keys[pg.K_RIGHT] and self.ground.rect.right > 1024:
-                print(self.ground.rect.right)
                 self.all.update(dt, self.speed)
             elif pressed_keys[pg.K_LEFT] and self.ground.rect.left < 0:
                 self.all.update(dt, -self.speed)
