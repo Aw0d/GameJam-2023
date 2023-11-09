@@ -124,7 +124,7 @@ class Player(pg.sprite.Sprite):
             self.channel.play(Player.jump_sound)
             self.jumping = True
             self.move_frame = 0
-            self.vel_y = -0.85
+            self.vel_y = -0.75
     
     def slide(self):
         if not self.sliding:
