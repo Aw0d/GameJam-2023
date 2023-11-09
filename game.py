@@ -161,7 +161,7 @@ class Game:
             for sprite in hits:
                 if isinstance(sprite, (Table)):
                     # Si on n'est pas au dessus ou en dessous
-                    if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 50:
+                    if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 45:
                         self.isLosed = True
                 elif isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
