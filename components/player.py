@@ -1,5 +1,6 @@
 import pygame as pg
-from components.book import Book
+from components.bonus import Bonus
+from components.malus import Malus
 from components.spike import Spike
 
 
@@ -77,8 +78,10 @@ class Player(pg.sprite.Sprite):
 
     def ground_colision(self, hits):
       if self.vel_y > 0:
+        
+        # On enlève les objets sur lesquels on ne peut pas marcher
         i = 0
-        while i < len(hits) and isinstance(hits[i], (Book, Spike)):
+        while i < len(hits) and isinstance(hits[i], (Bonus, Malus, Spike)):
             i += 1
         if i < len(hits) :
 

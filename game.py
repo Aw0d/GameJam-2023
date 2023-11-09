@@ -5,7 +5,8 @@ from components.ground import Ground
 from components.spike import Spike
 from components.table import Table
 from components.chair import Chair
-from components.book import Book
+from components.bonus import Bonus
+from components.malus import Malus
 from components.end import EndGame
 
 from menu.hud import HUD
@@ -55,16 +56,22 @@ class Game:
         self.all.add(Spike(2000, self.ground.rect.top))
         self.all.add(Spike(2030, self.ground.rect.top))
 
+        self.all.add(Malus((2500, self.ground.rect.top - 10)))
+
         self.all.add(Spike(3000, self.ground.rect.top))
         self.all.add(Spike(3030, self.ground.rect.top))
-        self.all.add(Ground((50, 30), (3070, self.ground.rect.top)))
+        self.all.add(Ground((50, 50), (3070, self.ground.rect.top)))
         self.all.add(Spike(3130, self.ground.rect.top))
         self.all.add(Spike(3160, self.ground.rect.top))
-        self.all.add(Ground((50, 60), (3200, self.ground.rect.top)))
+        self.all.add(Ground((50, 100), (3200, self.ground.rect.top)))
         self.all.add(Spike(3260, self.ground.rect.top))
         self.all.add(Spike(3290, self.ground.rect.top))
-        self.all.add(Ground((50, 90), (3320, self.ground.rect.top)))
+        self.all.add(Ground((50, 150), (3320, self.ground.rect.top)))
+        self.all.add(Bonus((3320, self.ground.rect.top - 160)))
+
         self.all.add(EndGame(8800, self.ground.rect.top))
+        
+        # On sépare les objets sans hitboxe des objets avec hitboxe
         self.objects_with_hitbox = pg.sprite.Group()
         for sprite in self.all.spritedict:
             if not isinstance(sprite, (Background, Player)):
@@ -154,10 +161,15 @@ class Game:
                 elif isinstance(sprite, Spike):
                     if self.player.rect.clipline(sprite.rect.bottomleft, sprite.rect.midtop) or self.player.rect.clipline(sprite.rect.bottomright, sprite.rect.midtop):
                         self.isLosed = True
-                elif isinstance(sprite, Book):
+                elif isinstance(sprite, Bonus):
                     self.all.remove(sprite)
                     self.objects_with_hitbox.remove(sprite)
                     self.bonus += 1
+                    self.hud.update_score(self.bonus)
+                elif isinstance(sprite, Malus):
+                    self.all.remove(sprite)
+                    self.objects_with_hitbox.remove(sprite)
+                    self.bonus -= 1
                     self.hud.update_score(self.bonus)
                 elif isinstance(sprite, EndGame):
                     self.isWin = True
