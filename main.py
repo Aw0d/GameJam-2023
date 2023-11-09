@@ -1,4 +1,5 @@
 import pygame as pg
+pg.mixer.init()
 from game import Game
 from menu.main_menu import MainMenu
 from menu.credits_menu import CreditsMenu

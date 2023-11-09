@@ -96,13 +96,11 @@ class Game:
                 case pg.KEYUP:
                     if event.key == pg.K_ESCAPE:
                         if not self.isLosed and not self.isWin:
-                            if self.isPaused:
-                                self.isPaused = not self.isPaused
-                            else:
-                                self.isPaused = not self.isPaused
+                            self.isPaused = not self.isPaused
+
 
         if self.isWin or self.isLosed or self.isPaused or self.isEnded:
-                pg.mixer.pause()
+                self.player.channel.pause()
 
         if self.isPaused:
             self.menu_pause.show()

@@ -12,7 +12,6 @@ class Player(pg.sprite.Sprite):
 
     slide_ani = [pg.image.load("images/characters/player/slide1.png"), pg.image.load("images/characters/player/slide2.png")]
 
-    pg.mixer.init()
     jump_sound = pg.mixer.Sound("sounds/jump.mp3")
     slide_sound = pg.mixer.Sound("sounds/slide.mp3")
     running_sound = pg.mixer.Sound("sounds/running.mp3")
@@ -33,7 +32,7 @@ class Player(pg.sprite.Sprite):
         self.slide_timer = 0  # Initialisation du compteur de glissade
         self.move_frame = 0
 
-        self.channel = pg.mixer.Channel(1)
+        self.channel = pg.mixer.Channel(0)
         self.channel.play(Player.running_sound , -1)
 
     def _update(self,dt, hits):

@@ -26,14 +26,16 @@ class CreditsMenu():
         pos = pg.mouse.get_pos()
         for button in self.list_buttons:
             if button.rect.collidepoint(pos):
-                button.hover(True)
+                if not button.isHover:
+                    button.hover(True)
                 for event in events:
                     match event.type:
                         case pg.MOUSEBUTTONUP:
                             if event.button == pg.BUTTON_LEFT:
-                                return button.func()                    
+                                return button.clicked()                    
             else:
-                button.hover(False)
+                if button.isHover:
+                    button.hover(False)
 
     def show(self):
         self.screen.blit(self.background,(0,0))
