@@ -17,8 +17,6 @@ from menu.lose_menu import LoseMenu
 from menu.win_menu import WinMenu
 
 class Game:
-    music_sound = pg.mixer.music.load("music/8bit-Cruising-Down.mp3")
-
     def __init__(self, screen: pg.Surface, level: Level):
         # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
@@ -65,8 +63,10 @@ class Game:
 
         self.player = Player()
         self.all.add(self.player)
-        self.channel = pg.mixer.Channel(5)
-        self.channel.play(Game.music_sound , -1)
+        
+        # Musique de fond
+        pg.mixer.music.load("music/8bit-Cruising-Down.mp3")
+        pg.mixer.music.play(-1)
 
         # Vrai si le jeu est fini
         self.isEnded = False
@@ -117,6 +117,7 @@ class Game:
                     if event.key == pg.K_ESCAPE:
                         if not self.isLosed and not self.isWin:
                             self.isPaused = not self.isPaused
+                            pg.mixer.music.unpause()
 
 
         if self.isWin or self.isLosed or self.isPaused or self.isEnded:
@@ -125,8 +126,12 @@ class Game:
         if self.isPaused:
             self.menu_pause.show()
             action = self.menu_pause.update(events)
+            # Mettre la musique en pause
+            pg.mixer.music.pause()
+
             if action == "continue":
                 self.isPaused = False
+                pg.mixer.music.unpause()
             elif action == "retry":
                 self.retry = True
             elif action == "menu":

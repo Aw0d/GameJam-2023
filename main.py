@@ -104,6 +104,7 @@ def main():
             elif action == "Music":
                 music_on = not music_on
                 if music_on:
+                    pg.mixer_music.stop()
                     pg.mixer_music.set_volume(100)
                 else:
                     pg.mixer_music.set_volume(0)
