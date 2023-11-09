@@ -51,6 +51,13 @@ class Game:
         self.all.add(self.background)
         self.all.add(self.ground)
 
+        self.all.add(Chair(500, self.ground.rect.top))
+        self.all.add(Chair(540, self.ground.rect.top))
+        self.all.add(Chair(580, self.ground.rect.top))
+        self.all.add(Chair(620, self.ground.rect.top))
+        self.all.add(Chair(660, self.ground.rect.top))
+        self.all.add(Chair(700, self.ground.rect.top))
+
         self.all.add(Spike(1000, self.ground.rect.top))
 
         self.all.add(Spike(2000, self.ground.rect.top))
@@ -154,7 +161,11 @@ class Game:
                     # Si on n'est pas au dessus ou en dessous
                     if self.player.rect.bottom > sprite.rect.top + 30 and self.player.rect.top < sprite.rect.bottom - 50:
                         self.isLosed = True
-                elif isinstance(sprite, (Chair, Ground)):
+                elif isinstance(sprite, Chair):
+                    # Si on n'est pas au dessus
+                    if self.player.rect.bottom > sprite.rect.top + 30 +28:
+                        self.isLosed = True
+                elif isinstance(sprite, Ground):
                     # Si on n'est pas au dessus
                     if self.player.rect.bottom > sprite.rect.top + 30:
                         self.isLosed = True

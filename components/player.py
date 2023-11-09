@@ -2,6 +2,7 @@ import pygame as pg
 from components.bonus import Bonus
 from components.malus import Malus
 from components.spike import Spike
+from components.chair import Chair
 from components.particle import Particle
 
 
@@ -24,7 +25,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Position
-        self.pos = pg.math.Vector2((200, 200))
+        self.pos = pg.math.Vector2((200, 600))
         self.vel_y = 0
         self.acc_y = 0.06
 
@@ -101,10 +102,16 @@ class Player(pg.sprite.Sprite):
         if i < len(hits) :
 
             lowest = hits[i]
-            if self.rect.bottom > lowest.rect.top - 2 and self.rect.bottom < lowest.rect.bottom:
-                self.pos.y = lowest.rect.top + 1
-                self.vel_y = 0
-                self.jumping = False
+            if isinstance(lowest, Chair):
+                if self.rect.bottom > lowest.rect.top - 2 + 28 and self.rect.bottom < lowest.rect.bottom:
+                    self.pos.y = lowest.rect.top + 1 + 28
+                    self.vel_y = 0
+                    self.jumping = False
+            else:
+                if self.rect.bottom > lowest.rect.top - 2 and self.rect.bottom < lowest.rect.bottom:
+                    self.pos.y = lowest.rect.top + 1
+                    self.vel_y = 0
+                    self.jumping = False
 
 
 
