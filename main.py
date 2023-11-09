@@ -1,4 +1,5 @@
 import pygame as pg
+import pickle
 pg.mixer.init()
 from game import Game
 from menu.main_menu import MainMenu
@@ -82,10 +83,6 @@ def main():
             pg.display.flip()
 
         elif state == 1: # Jeu
-            # Si le jeu n'est pas créé, on en crée un
-            if game == None:
-                game = Game(screen)
-
             action = game.state()
             if action == "end":
                 state = 0
@@ -136,6 +133,11 @@ def main():
             action = choose_level_menu.update(events)
             if action == "back":
                 state = 0
+            elif action != None:
+                with open("levels/" + action, 'rb') as fichier:
+                    level = pickle.load(fichier)
+                game = Game(screen, level)
+                state = 1
 
             pg.display.flip()
     # Fin utilisation de pygame

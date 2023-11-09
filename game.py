@@ -9,13 +9,15 @@ from components.bonus import Bonus
 from components.malus import Malus
 from components.end import EndGame
 
+from level.level import Level
+
 from menu.hud import HUD
 from menu.pause_menu import PauseMenu
 from menu.lose_menu import LoseMenu
 from menu.win_menu import WinMenu
 
 class Game:
-    def __init__(self, screen: pg.Surface):
+    def __init__(self, screen: pg.Surface, level: Level):
         # Conserve le lien vers l'objet surface ecran du jeux
         self.screen = screen
 
@@ -42,7 +44,7 @@ class Game:
         # Crée une surface pour le fond du jeu de même taille que la fenêtre
         self.background = Background(self.screen.get_size())
         # Création du sol
-        self.ground = Ground((10000, 80), (0, self.screen.get_height()))
+        self.ground = Ground((0, self.screen.get_height()), (10000, 80))
 
         # Objet sous groupe pour avoir la liste des sprites et automatiser la mise à jour par update()
         # Automatise aussi l'affichage : draw() par défaut affiche dans l'écran image à la position rect
@@ -51,32 +53,7 @@ class Game:
         self.all.add(self.background)
         self.all.add(self.ground)
 
-        start_x = 1200
-
-        self.all.add(Chair(start_x + 500, self.ground.rect.top))
-
-        self.all.add(Table(start_x + 700, self.ground.rect.top))
-
-        self.all.add(Spike(start_x + 1000, self.ground.rect.top))
-
-        self.all.add(Spike(start_x + 2000, self.ground.rect.top))
-        self.all.add(Spike(start_x + 2030, self.ground.rect.top))
-
-        self.all.add(Malus((start_x + 2500, self.ground.rect.top - 10)))
-
-        self.all.add(Spike(start_x + 3000, self.ground.rect.top))
-        self.all.add(Spike(start_x + 3030, self.ground.rect.top))
-        self.all.add(Ground((50, 50), (start_x + 3070, self.ground.rect.top)))
-        self.all.add(Spike(start_x + 3130, self.ground.rect.top))
-        self.all.add(Spike(start_x + 3160, self.ground.rect.top))
-        self.all.add(Ground((50, 100), (start_x + 3200, self.ground.rect.top)))
-        self.all.add(Spike(start_x + 3260, self.ground.rect.top))
-        self.all.add(Spike(start_x + 3290, self.ground.rect.top))
-        self.all.add(Ground((50, 150), (start_x + 3320, self.ground.rect.top)))
-        self.all.add(Bonus((start_x + 3320, self.ground.rect.top - 160)))
-
-        self.endGame = EndGame(start_x + 3800, self.ground.rect.top)
-        self.all.add(self.endGame)
+        self.load_level(level)
         
         # On sépare les objets sans hitboxe des objets avec hitboxe
         self.objects_with_hitbox = pg.sprite.Group()
@@ -95,6 +72,29 @@ class Game:
         self.retry = False
 
         self.current_end_pause_time = 0
+
+    def load_level(self, level : Level):        
+        for object, info in level.all.items():
+            match object:
+                case "Chair":
+                    self.all.add(Chair(info))
+
+                case "Table":
+                    self.all.add(Table(info))
+                
+                case "Ground":
+                    self.all.add(Ground(info[0], info[1]))
+
+                case "Bonus":
+                    self.all.add(Bonus(info))
+                
+                case "Malus":
+                    self.all.add(Malus(info))
+
+                case "EndGame":
+                    self.endGame = EndGame(info)
+                    self.all.add(self.endGame)
+
 
     def state(self):
         if self.isEnded:

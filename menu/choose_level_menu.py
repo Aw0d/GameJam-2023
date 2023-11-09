@@ -10,7 +10,7 @@ class ChooseLevelMenu():
 
         repertoire_levels = "levels"
 
-        nb_levels = min(len([f for f in os.listdir(repertoire_levels) if os.path.isfile(os.path.join(repertoire_levels, f))]), 14)
+        level_files = [f for f in os.listdir(repertoire_levels) if os.path.isfile(os.path.join(repertoire_levels, f))]
 
         self.list_buttons = []
         self.all = pg.sprite.RenderUpdates()
@@ -18,8 +18,8 @@ class ChooseLevelMenu():
 
         current_width = 24 + 309/2
         current_height = 120 + 100/2
-        for _ in range(nb_levels):
-            button = Button((current_width, current_height), "test", lambda: "test")
+        for level in level_files:
+            button = Button((current_width, current_height), level, lambda: level)
             
             self.list_buttons.append(button)
             self.all.add(button)
