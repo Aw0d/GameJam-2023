@@ -3,6 +3,7 @@ pg.mixer.init()
 from game import Game
 from menu.main_menu import MainMenu
 from menu.credits_menu import CreditsMenu
+from menu.settings_menu import Settings
 
 # Fonction principale : pas de varaibles globales
 def main():
@@ -30,6 +31,14 @@ def main():
 
     # Variable contenant le menu principal
     main_menu = MainMenu(screen)
+    
+    #variable contenant le menu des settings
+    settings = Settings(screen)
+    
+    #Variables des parametres des settings
+    music_on = True
+    sfx_on = True
+    
     # Variable contenant le jeu
     game = None
 
@@ -58,6 +67,8 @@ def main():
             menu_state = main_menu.update(events)
             if menu_state == "play":
                 state = 1
+            elif menu_state == "settings":
+                state = 2
             elif menu_state == "quit":
                 running = False
             elif menu_state == "credits":
@@ -83,8 +94,28 @@ def main():
             # Affiche le nouvel état de l'écran
             pg.display.flip()
 
-        elif state == 2: # Menu settings
-            pass
+        elif state == 2: # Menu settings 
+            settings.show()
+             
+            action = settings.update(events)
+            if action == "back":
+                state = 0
+            elif action == "Music":
+                music_on = not music_on
+                if music_on:
+                    pg.mixer_music.set_volume(100)
+                else:
+                    pg.mixer_music.set_volume(0)
+            elif action == "SFX":
+                sfx_on = not sfx_on
+                if sfx_on:
+                    for _ in range(pg.mixer.get_num_channels()):
+                        pg.mixer.Channel(_).set_volume(100)
+                else:
+                    for _ in range(pg.mixer.get_num_channels()):
+                        pg.mixer.Channel(_).set_volume(0)
+                
+            pg.display.flip()
         elif state == 3: # Editeur de niveaux
             pass
         elif state == 4: # Crédits

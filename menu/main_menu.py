@@ -8,7 +8,7 @@ class MainMenu():
         logo = Image((500, 174), (512, 100), "images/logo.png")
 
         start_button = Button((512, 300), "Play", lambda: "play")
-        menu_button = Button((512, 425), "Settings", lambda:print("OPTIONS"))
+        menu_button = Button((512, 425), "Settings", lambda:"settings")
         inspect_button = Button((512, 550), "Level Editor", lambda:print("MODE INSPECTION"))
         exit_button = Button((512, 675), "Exit", lambda: "quit", "red")
         credits_button = Button((screen.get_width() - 216/2 - 15, screen.get_height() - 70/2 - 15), "Credits", lambda: "credits", "small_green")
