@@ -89,7 +89,9 @@ class LevelCreator:
                                     self.click1 = posMouse
                                 elif not self.click2:
                                     self.click2 = posMouse
-                                    self.all.add(Ground(self.click1, (abs(self.click2[0] - self.click1[0]), abs(self.click2[1] - self.click1[1]))))
+                                    posx = min(self.click1[0], self.click2[0])
+                                    posy = max(self.click1[1], self.click2[1])
+                                    self.all.add(Ground((posx, posy), (abs(self.click2[0] - self.click1[0]), abs(self.click2[1] - self.click1[1]))))
                                     self.click1 = None
                                     self.click2 = None
                             elif self.menu_contents.getSelection() == 2:
